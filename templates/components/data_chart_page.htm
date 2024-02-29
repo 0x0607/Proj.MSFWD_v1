@@ -1,0 +1,40 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- InformationPage -->
+<article style="width: 100%;">
+    <script>
+        window.onload = function () {
+            {foreach $dataChartdata as $value}
+            {$value@key} = new CanvasJS.Chart('{$value@key}Container', {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "dark1", // "light1", "light2", "dark1", "dark2"
+                // title: {
+                //     text: "{$value@key}"
+                // },
+                // axisY: {
+                //     title: "{$value@key}"
+                // },
+                data: [
+                    {
+                        color: "#204f98",
+                        type: "line", // "bar", "line", "area", "pie" 
+                        dataPoints: {$value}
+                    }
+                ]
+
+            });
+            {$value@key}.render();{/foreach}
+        }
+    </script>
+    
+    <div class="mainColor" style="border-radius: 30px;background-color: rgba(0,0,0,.3);padding: 35px;width: 80%;margin: 80px auto;">
+        {foreach $dataChartdata as $value}
+        <h1>{$value@key}圖表</h1>
+        <div id="{$value@key}Container" style="height: 370px;width: 100%;"></div>
+        {if not $value@last}<hr style="margin: 20px auto;"/>{/if}
+        {/foreach}
+    </div>
+    
+</article>
+<!-- InformationPage EOF -->

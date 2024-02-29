@@ -1,0 +1,56 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- productDetails -->
+
+<div style="margin: 100px auto;" class="mainColor">
+	<div class="wrapper">
+		{if $component.param.method eq "edit"}
+		<div class="productImageList">
+			<form action="/api/api.uploadfile.php" method="POST">
+                <label class="productCoverImage productCoverImageEdit" for="{$product.id}" style="margin-bottom: 0">
+                    <img src="{$product.cover_photo}" alt="" />
+                </label>
+                <input name="IMAGE_UPLOAD" id="{$product.id}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                    onchange="uploadImage('PRODUCT_CHANGE_IMAGE','{$product.id}')">
+            </form>
+			<div class="productBelowImage">
+				<img src="../../../assets/images/noImage.svg" />
+				<img src="../../../assets/images/noImage.svg" />
+				<img src="../../../assets/images/noImage.svg" />
+			</div>
+		</div>
+		<form class="productInformation-description">
+			<input name="{$product.id}_name" value="{$product.name}" type="text" placeholder="商品名稱" style="color: #000;" /><br />
+			<input name="{$product.id}_price" value="{$product.price}" type="text" placeholder="售價" style="color: #000;" />
+			<input name="{$product.id}_quantity" value="{$product.quantity}" type="hidden" placeholder="數量" style="color: #000;" />
+			<br />
+			<h6 style="color: #bbbbbb;">商品說明</h6>
+			<textarea name="{$product.id}_description" placeholder="商品說明" class="productDescription"
+				style="color: #000;">{$product.description}</textarea>
+			<button
+				onclick="{if isset($mid)}updateProduct('{$product.id}');{else}window.location.href='?route=login'{/if}">編輯</button>
+		</form>
+		{else}
+		<div class="productImageList">
+			<div class="productCoverImage">
+				<img src="{$product.cover_photo}" />
+			</div>
+			<div class="productBelowImage">
+				<img src="../../../assets/images/noImage.svg" />
+				<img src="../../../assets/images/noImage.svg" />
+				<img src="../../../assets/images/noImage.svg" />
+			</div>
+		</div>
+		<div class="productInformation-description">
+			<h1>{$product.name}</h1>
+			<h4 style="color: #ff8585;">NT$ {$product.price}</h4>
+			<br />
+			<h6 style="color: #bbbbbb;">商品說明</h6>
+			<div class="productDescription">{$product.description}</div>
+			<button
+				onclick="{if isset($mid)}updateCartItem('{$product.id}',1,'[]','[]');{else}window.location.href='?route=login'{/if}">加入購物車</button>
+		</div>
+		{/if}
+	</div>
+</div>
+<!-- productDetails EOF -->

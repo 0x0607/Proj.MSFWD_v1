@@ -1,0 +1,24 @@
+{* 請從 $component.param 抓取元件參數 *}
+<!-- table -->
+<div
+    style="background-color: rgba(0,0,0, .3);margin: 50px auto;padding: 10px 28px;border-radius: 30px;width:{if isset({$component.param.width})}{$component.param.width}{else}100%{/if};">
+    <h1 style="text-align: center;width: 100%;">{$component.param.title}</h1>
+    <div class="css_table" style="width: 100%;">
+        {foreach $component.param.rows as $row}
+        <div class="css_row">
+            {foreach $row as $col}
+            <div class="css_col" style="text-align: center;{if isset($col.width)}width: {$col.width};{/if}">
+                {if isset($col.type)}
+                {if $col.type eq "code"}
+                <code>{$col.content}</code>
+                {/if}
+                {else}
+                {$col.content}
+                {/if}
+            </div>
+            {/foreach}
+        </div>
+        {/foreach}
+    </div>
+</div>
+<!-- table EOF -->

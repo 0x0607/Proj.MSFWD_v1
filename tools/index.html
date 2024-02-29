@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Language" content="{$language}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script>
+        function convertCSharpTickToTimestamp(input, output) {
+            let timezoneOffset = 28800;
+            let inputElement = document.getElementById(input);
+            let outputElement = document.getElementById(output);
+            // if (inputElement.value < 621355968000000000 || typeof inputElement.value === 'string') return false;
+            // else {
+                let timestamp = (inputElement.value - 621355968000000000) / 10000000 - timezoneOffset;
+                let date = new Date(timestamp * 1000);
+
+                let formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+                let formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                outputElement.innerHTML = `${formattedDate} ${formattedTime}`;
+            // }
+
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        請輸入時間：
+        <input id="input" oninput="convertCSharpTickToTimestamp('input', 'output')" />
+    </form>
+    <code id="output"></code>
+</body>
+
+
+</html>

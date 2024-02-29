@@ -1,0 +1,13 @@
+{include file="header.htm"}
+<article style="min-height: 96.7vh;">
+{*include file="cart.htm"*}
+{foreach $pageComponents as $component }
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-------------------------------->
+<!-- 元件ID: {$component.id} -->
+<!-- 元件名稱: {$component.displayname} -->
+{include file="components/{$component.template}.htm"}
+{/foreach}
+</article>
+{include file="footer.htm"}

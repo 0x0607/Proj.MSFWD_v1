@@ -1,0 +1,27 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- unturned_shop -->
+<!-- <h3 class="accentColor" style="margin: 20px 5px;">CTRL + F 能夠快速查找</h3> -->
+<div class="productList">
+    <div class="wrapper">
+        {foreach $products as $product}
+        <div class="card">
+            <a href="#Id={$product.Id}" target="_self" class="card-image">
+                {if $type eq "vehicle"}
+                <img src="{$component.param.vehicleshop}{$product.Id}.png" onerror="this.src='./assets/images/error404.png'" alt="Location Unknown">
+                {else}
+                <img src="{$component.param.itemshop}{$product.Id}.png" onerror="this.src='./assets/images/error404.png'" alt="Location Unknown">
+                {/if}
+            </a>
+            <div class="card-details">
+                <p class="productName">{if $type eq "vehicle"}{$product.VehicleName}{else}{$product.ItemName}{/if}</p>
+                {if $product.Buying neq 0}<p class="productDescription">售價<br/>{$product.Buying}</p>{/if}
+                {if $product.Selling neq 0}<p class="productDescription">回售價<br/>{$product.Selling}</p>{/if}
+            </div>
+        </div>
+        {foreachelse}
+        <h1>Oh....空蕩蕩一片沒有任何商品</h1>
+		{/foreach}
+    </div>
+</div>
+<!-- unturned_shop EOF -->

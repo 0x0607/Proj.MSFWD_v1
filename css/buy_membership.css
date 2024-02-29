@@ -1,0 +1,86 @@
+.buy_membership_container {
+  margin: 200px auto 150px auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 100px 50px ;
+}
+
+.buy_membership_card {
+  transition: all 0.5s ease-in-out;
+}
+
+.buy_membership_card:hover {
+  /* transform: scale(1.1); */
+  transform: translateY(-50px);
+}
+
+.buy_membership_content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+
+}
+
+.buy_membership_content,
+.buy_membership_card button {
+  width: 400px;
+}
+
+.buy_membership_details h1 {
+  position: absolute;
+  top: -30px;
+  left: 40px;
+  text-shadow: 0 8px 8px rgba(0, 0, 0, .8);
+  font-size: 50px;
+}
+
+
+.buy_membership_details h1,
+.buy_membership_details h2,
+.buy_membership_details h3,
+.buy_membership_details h4,
+.buy_membership_details h5,
+.buy_membership_details h6 {
+  margin-bottom: 0px;
+}
+
+.buy_membership_details>ul {
+  margin: 20px auto;
+  font-size: 18px;
+}
+
+.buy_membership_details>ul>li span.material-icons::before {
+  content: "thumb_up";
+}
+
+.buy_membership_details em,
+.buy_membership_details h5 {
+  color: rgba(255, 255, 255, .5);
+}
+
+.buy_membership_card button {
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  min-height: 70px;
+  font-size: 24px;
+}
+
+.buy_membership_details {
+  margin: 0 auto;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  text-align: center;
+  padding: 50px 0;
+  background-color: rgba(255, 255, 255, .1);
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+}
+
+.buy_membership_details>ul {
+  text-align: left;
+}

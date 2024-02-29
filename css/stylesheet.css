@@ -1,0 +1,191 @@
+/*************************************************************
+ * 
+ * CSS樣式設定 - 全域
+ * By Yin, MaizuRoad
+ * 
+ *************************************************************/
+/* 字體 */
+/************************************************************/
+@font-face {
+    font-family: "JhengHei";
+    src: url("./font/JhengHei.ttf");
+}
+
+/* @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css); */
+/* @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(./font/fa-solid-900.ttf);
+} */
+/* @import url(font-awesome.min.css); */
+/************************************************************/
+/* 禁用所有元素文字選取 */
+* {
+    /* font-family: "cwTeXYen", "sans-serif", "JhengHei", "微軟正黑體 Light", "黑體-繁"; */
+    font-family: "JhengHei", "微軟正黑體 Light", "黑體-繁";
+    vertical-align: baseline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+code {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+
+/* input[type="text"], input[type="password"], input[type="submit"], textarea{
+      border-radius: 5px;
+      font-size: 16px;
+  }
+  input[type="text"], input[type="password"], textarea {
+      width: 100%;
+      padding: 7px;
+  }
+  input[type="submit"] {
+      padding: 7px 20px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all .2s;
+  } */
+
+/************************************************************/
+code,
+button,
+.searchBar * {
+    transition: 0.3s ease;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+body {
+    /* font-family: Arial, sans-serif; */
+    margin: 0;
+    padding: 0;
+    /* overflow: scroll; */
+    scrollbar-width: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+button:not(.material-icons) {
+    padding: 12px 20px;
+    font-size: 10pt;
+}
+
+button.material-icons {
+    padding: 12px 0px;
+    font-size: 24pt;
+}
+
+button {
+    cursor: pointer;
+}
+
+span.material-icons {
+    font-size: 14px;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+form input {
+    outline: none;
+    border: 2px solid transparent;
+}
+
+form input[type="submit"] {
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+}
+
+/************************************************************
+ * 特殊
+ * 切換器按鈕
+ ***********************************************************/
+.switch {
+    position: relative;
+    margin: 0;
+    padding: 12px 0px;
+}
+
+.switch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+}
+
+.switch .slider {
+    position: relative;
+    display: inline-block;
+    width: 65px;
+    height: 39px;
+    background-color: #ccc;
+    color: #ccc;
+    border-radius: 31px;
+    transition: background-color 0.2s ease;
+}
+
+.slider:hover {
+    background-color: #999;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 31px;
+    width: 31px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.switch input[type="checkbox"]:checked+.slider:hover {
+    background-color: darkgreen;
+}
+
+.switch input[type="checkbox"]:checked+.slider {
+    background-color: green;
+}
+
+.switch input[type="checkbox"]:checked+.slider:before {
+    transform: translateX(25px);
+}
+
+.css_table{
+    display: table;
+}
+.css_row{
+    display: table-row;
+}
+.css_col{
+    display: table-cell;
+}

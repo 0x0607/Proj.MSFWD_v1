@@ -1,0 +1,197 @@
+/*************************************************************
+ *
+ * CSS樣式設定 - 顏色配置
+ *
+ * 主文字顏色 .mainColor
+ * 主背景顏色 .mainBackgroundColor
+ * 主按鍵顏色 .mainButtonColor 
+ * 輔背景顏色 .secondaryBackgroundColor
+ *
+ *************************************************************/
+/* 底色 */
+/************************************************************/
+body {
+    background-color: #212121;
+}
+
+/************************************************************/
+/* 背景顏色 */
+/************************************************************/
+/* 主色 */
+.mainBackgroundColor {
+    background-color: #212121;
+}
+
+/* 輔色 */
+.secondaryBackgroundColor {
+    background-color: #2879f6;
+}
+
+/* 次要輔色 */
+.thirdSecondaryBackgroundColor {
+    background-color: #FFF;
+}
+
+/* 次要輔色2 */
+/* .fourthSecondaryColor {
+    background-color: #FFF;
+} */
+
+/************************************************************/
+/* 文字顏色 */
+/************************************************************/
+/* 主色 */
+a,
+.mainColor,
+.mainColor * {
+    color: #FFF;
+}
+
+/* 輔色 */
+a:hover,
+.secondaryColor {
+    color: #2879f6;
+}
+
+/* 次要輔色 */
+/* .thirdSecondaryColor,
+.thirdSecondaryColor * {
+    color: #FFF;
+} */
+
+/* 次要輔色2 */
+/* .fourthSecondaryColor,
+.fourthSecondaryColor * {
+    color: #141414;
+} */
+
+/************************************************************/
+/* 按鈕顏色 */
+/************************************************************/
+/* 主色 */
+button {
+    background-color: #2879f6;
+    color: #FFF;
+}
+
+button:hover {
+    background-color: #FFF;
+    color: #2879f6;
+}
+
+/* 主色 */
+button,
+.mainButtonColor,
+.mainButtonColor *,
+.secondaryButtonColor:hover,
+.secondaryButtonColor:hover * {
+    color: #FFF;
+}
+
+button,
+.mainButtonColor,
+.secondaryButtonColor:hover {
+    background-color: #2879f6;
+}
+
+/* 輔色 */
+button:hover,
+.secondaryButtonColor,
+.secondaryButtonColor *,
+.mainButtonColor:hover,
+.mainButtonColor:hover * {
+    color: #2879f6;
+}
+
+button:hover,
+.secondaryButtonColor,
+.mainButtonColor:hover {
+    background-color: #FFF;
+}
+
+/* 如果是特殊Icon則固定透明，顏色將繼承主色 */
+.material-icons,
+.material-icons:hover {
+    background-color: transparent;
+}
+
+/************************************************************/
+/* 框線顏色 */
+/************************************************************/
+.mainBorderColor{
+    border-color: #2879f6;
+}
+/************************************************************/
+/* 特殊顏色 */
+/************************************************************/
+.banner:nth-child(even) {
+    background-color: #141414;
+}
+
+.banner:nth-child(odd) {
+    background-color: #204f98;
+}
+
+.navbarTop {
+    background-color: rgb(33, 33, 33, .8);
+}
+
+#floatingShoppingList {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.searchBar button,
+input[type="submit"] {
+    background-color: #fff;
+}
+
+.searchBar button:hover,
+input[type="submit"]:hover,
+input[type="search"]:focus~button {
+    background-color: #2879f6;
+}
+
+.searchBar button:hover,
+.searchBar input[type="search"]:focus~button{
+    color: #fff;
+}
+
+input:focus {
+    border-color: #287af6;
+}
+
+/* form input:focus~span, */
+.searchBar button,
+input[type="search"]:hover,
+input[type="submit"] {
+    color: #2879f6;
+}
+
+input[type="search"] {
+    color: #000;
+}
+
+code {
+    color: #2879f6;
+}
+
+code:hover,
+.delete {
+    color: #f62885;
+}
+
+.delete:hover {
+    color: #b22424;
+}
+
+/* 導覽列下拉選單顏色 */
+/* .navbarTop>.menu .list::before {
+    border-top: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+    background-color: #FFF;
+  } */
+
+/* .navbarTop>.menu .list {
+    background: #FFF;
+    border: 0px solid #FFF;
+  } */

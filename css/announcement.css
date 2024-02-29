@@ -1,0 +1,20 @@
+.announcement{
+	width: 85%;
+	border-radius: 30px;
+	padding: 20px;
+	margin: 70px auto;
+}
+.announcementContentText {
+	padding: 20px;
+	border-top: none;
+}
+.announcementContentText {
+	display: none;
+}
+.announcementContentText:first-child {
+	display: block;
+}
+.announcementContent{
+    height: 200px;
+}
+

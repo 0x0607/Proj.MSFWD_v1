@@ -1,0 +1,69 @@
+{* 請從 $component.param 抓取元件參數 *}
+{if isset($component.param.method)}
+{if $component.param.method eq "membership"}
+<!-- buy_membership -->
+<div class="buy_membership_container">
+    {foreach $products as $product}
+    {if $product.status eq 1}
+	<article class="buy_membership_card" >
+		<div class="buy_membership_content mainColor">
+			<div class="buy_membership_details">
+				<h1 >{$product.name}</h1>
+				<!-- <em>一些文字</em> -->
+				<h3>{if $product.price neq 0}{$product.price}${else}免費{/if}</h3>
+				<h5>/ 每月</h5>
+				<ul>
+                    {if isset($product.descriptions)}
+                    {foreach $product.descriptions as $description}
+					<li><span class="material-icons secondaryColor"></span> {$description}</li>
+                    {foreachelse}
+                    <li>沒有任何說明</li>
+                    {/foreach}
+                    {else}
+                    <li><span class="material-icons secondaryColor"></span> {$product.description}</li>
+                    {/if}
+				</ul>
+			</div>
+		</div>
+        {if $product.price neq 0}<form id="dnposter" class="confirm" method="POST" action={if isset($mid)}"/api/api.checkout.php"{else}"?route=login"{/if}>{/if}
+            <input type="hidden" name="pid" value="{$product.id}"/>
+            <button {if $product.price eq 0}style="background: gray;color: white;";{/if}>
+                {if $product.price neq 0}BUY{else}FREE{/if}
+            </button>
+            {if $product.price neq 0}</form>{/if}
+		
+	</article>
+    {/if}
+    {foreachelse}
+    <h1 style="margin: 100px;">sad 目前商店不開放購買會員</h1>
+    {/foreach}
+</div>
+<!-- buy_membership EOF -->
+{else}
+<!-- productsList -->
+<div class="productList">
+    <div class="wrapper">
+		{foreach $products as $product}
+        {if $product.status eq 1}
+        <div class="card">
+            <a href="?route=product&pid={$product.id}" target="_self" class="card-image">
+                <img src="{$product.cover_photo}" onerror="this.src='./assets/images/error404.png'" alt="Location Unknown">
+			</a>
+            <div class="mainBackgroundColor card-details">
+                <p class="productName">{$product.name}</p>
+                <!-- <p class="productDescription">{$product.description}</p> -->
+				<p class="productDescription">$ {$product.price}</p>
+				<button style="width: 100%;" onclick="{if isset($mid)}updateCartItem('{$product.id}',1,'[]','[]');{else}window.location.href='?route=login'{/if}">放入購物車</button>
+			</div>
+        </div>
+        {/if}
+        {foreachelse}
+        <h1 style="margin: 100px;">Oh....空蕩蕩一片沒有任何商品</h1>
+		{/foreach}
+    </div>
+</div>
+<!-- productsList EOF -->
+{/if}
+{else}
+<h1 style="margin: 100px;">錯誤，沒有配置Method</h1>
+{/if}
