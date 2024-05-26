@@ -14,8 +14,7 @@ touch ./templates_c/test.log
 touch ./cache/test.log
 
 # 變更目錄權限
-#chown $USER:apache * -R
-chown maizuru5272:apache * -R
+chown $USER:apache * -R
 restorecon -Rv .
 
 # 上傳檔案區域配置
