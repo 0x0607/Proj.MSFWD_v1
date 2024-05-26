@@ -98,5 +98,5 @@ _當前版本快照_
 > * _lib/[Smarty 4.3.0](https://www.smarty.net)_  
 > * _javaScript/[Bootstrap v4.0.0](https://getbootstrap.com)_  
 > * _javaScript/[jquery-3.2.1](https://jquery.com)_  
-> ~~* _javaScript/[Popper 3](https://github.com/vusion/popper.js)_~~  
+> * ~~_javaScript/[Popper 3](https://github.com/vusion/popper.js)_~~  
 > * _css/[Bootstrap v4.0.0](https://getbootstrap.com)_  
