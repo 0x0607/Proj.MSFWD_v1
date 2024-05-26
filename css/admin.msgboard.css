@@ -1,0 +1,16 @@
+/*************************************************************
+ * 
+ * CSS樣式設定 - 管理員商品清單
+ * By MaizuRoad
+ * 
+ *************************************************************/
+.flex_table>.msgtitle {
+   background-color: var(--alpha-20p);
+   transition: background-color .3s ease-in-out;
+   border-radius: 22px;
+   padding: 5px 0;
+}
+
+.flex_table>.msgtitle:hover {
+   background-color: var(--alpha-60p);
+}

@@ -1,0 +1,97 @@
+{if isset($webnav)}
+<!-- NavberTop -->
+<nav class="navbar">
+    <div class="content">
+        <a class="icon" href="#route" onclick="route('/?route=home')">
+            <img src="{$icon}">
+            <h2>{$siteName}</h2>
+        </a>
+        <div class="menu">
+            <div class="mask" id="1364965662354567168">
+                <div class="customize_buttons">
+                    <button class="hamburgermenu" onclick="toggleNavMenu('1364965662354567168')">
+                        <span class="buttonicon fa-solid fa-bars"></span>
+                        <span class="word">More</span>
+                    </button>
+                    <button id="backhome" onclick="route('/')">
+                        <span class="buttonicon fa-solid fa-home"></span>
+                        <span class="word">home</span>
+                    </button>
+                    {foreach $webnav as $navbar}
+                    {if $navbar.status}
+                    {if is_array($navbar.link)}
+                    <div class="dropdown" ontouchstart>
+                        <button class="word">
+                            <span class="buttonicon fa-solid {if isset($navbar.icon)}fa-{$navbar.icon}{else}star{/if}"></span>
+                            <span class="word">{$navbar.displayname}</span>
+                        </button>
+                        <div class="list">
+                            {foreach $navbar.link as $dropdown}
+                            {if $dropdown.status}
+                            <button onclick="route('{$dropdown.link}')">
+                                <span
+                                    class="buttonicon fa-solid {if isset($dropdown.icon)}fa-{$dropdown.icon}{else}star{/if}"></span>
+                                <span class="word">{$dropdown.displayname}</span>
+                            </button>
+                            {else}
+                            <!-- 系統已屏蔽按鈕 -->
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    {else}
+                    <button onclick="route('{$navbar.link}')">
+                        <span
+                            class="buttonicon fa-solid fa-{if isset($navbar.icon)}{$navbar.icon}{else}star{/if}"></span>
+                        <span class="word">{$navbar.displayname}</span>
+                    </button>
+                    {/if}
+                    {else}
+                    <!-- 系統已屏蔽按鈕 -->
+                    {/if}
+                    {/foreach}
+                </div>
+            </div>
+            <div class="system_buttons">
+                {if isset($member)}
+                {if isset($_self_account)}
+                <button id="setting_account" title="Setting {$member.account}'s Information" onclick="route('/account/?route=setting')">
+                    <span class="fa-solid fa-user-gear"></span>
+                    <span class="word">個人化</span>
+                </button>
+                {else}
+                <button id="account" title="{$member.account}'s Information" onclick="route('/account/')">
+                    <span  class="fa-solid fa-user"></span>
+                    <span class="word">帳戶</span>
+                </button>
+                {/if}
+                <button id="logout" title="logout" onclick="route('/account/?route=logout')">
+                    <span class="fa-solid fa-door-open" ></span>
+                    <span class="word">Logout</span>
+                </button>
+                {else}
+                <button id="login" title="login" onclick="route('/account/?route=login')">
+                    <span class="fa-solid fa-right-to-bracket"></span>
+                    <span class="word">Login</span>
+                </button>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb">
+        {if isset($breadcrumb)}
+        {foreach $breadcrumb as $crumb}
+        <a href="{$crumb.link}">{$crumb.displayname}</a><span>/</span>
+        {/foreach}
+        {else}
+        <a href="#">未知</a><span>/</span>
+        {/if}
+    </div>
+</nav>
+
+<!-- --------------------------------------------------- -->
+{if $memberPermissions neq 0}
+<button id="manage" class="fa-solid fa-gear " onclick="route('/admin/')" title="一庫走 嗨嗨"></button>
+{/if}
+<!-- NavberTop EOF -->
+{/if}

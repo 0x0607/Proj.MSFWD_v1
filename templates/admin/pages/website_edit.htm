@@ -1,0 +1,28 @@
+<form method="POST" onsubmit="return done(this, 'refresh' , 'ERROR_MESSAGE', false);">
+    {include file="{$dir}/table_creater.htm"}
+</form>
+
+
+
+<!-- <div style="margin: 0 auto;width: 87%">
+    <h1 style="margin: 80px auto 0 auto;">網站列表</h1>
+    <table style="background-color: rgba(0,0,0,.45); color:white; border-radius: 20px; width: 100%; padding: 20px 10px; margin: 0px auto;">
+        <tr>
+            <td style="text-align: center;">icon</td>
+            <td>id</td>
+            <td>domain name</td>
+            <td>status</td>
+        </tr>
+        
+        $website = $websiteManage->getAllWebsite();
+        foreach ($website as $w) {
+            echo "<tr>";
+            echo "<td style='text-align: center;'><img src='{$w['icon']}' style='width:64px;' onerror=\"this.src='../assets/images/error404.png'\"></img></td>";
+            echo "<td>{$w['id']}</td>";
+            echo "<td><a style='color:white;' href='http://{$w['domain']}' target='_blank'>{$w['domain']}</a></td>";
+            echo "<td>" . ($w['status'] ? "<span style='background-color:green;'>ENABLE</span>" : "<span style='background-color:red;'>DISABLE</span>") . "</td>";
+            echo "</tr>";
+        }
+        
+    </table>
+</div> -->

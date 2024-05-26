@@ -7,9 +7,9 @@ $LOG_REASON["unturned_shop"] = "";
  * 
  ****************************************************************************************/
 // 引入的CSS及JS
-// $includeCss[]="./css/".WEBSITE['stylesheet']."/.css";
-$includeCss[] = "./css/productList.css";
-// $includeJs[] = "./javascripts/.js";
+// $INCLUDE_CSS[]="./css/".WEBSITE['stylesheet']."/.css";
+$INCLUDE_CSS[] = "./css/productList.css";
+// $INCLUDE_JS[] = "./javascripts/.js";
 /****************************************************************************************/
 $products = [];
 $shopType = '';

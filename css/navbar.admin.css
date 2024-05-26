@@ -1,0 +1,145 @@
+/*************************************************************
+ * 
+ * 管理員導覽列
+ * By Maizuru(MaizuRoad)
+ * 
+ *************************************************************/
+/************************************************************
+ * flex 彈性盒子布局
+ ***********************************************************/
+nav.navbar,
+nav.navbar>.content,
+/* nav.navbar .icon, */
+nav.navbar .menu,
+nav.navbar .menu .system_buttons,
+nav.navbar .menu .dropdown>.list {
+    display: flex;
+}
+
+/************************************************************
+ * align-items: flex-start 物件置頂
+ ***********************************************************/
+nav.navbar>.content,
+/* nav.navbar .icon, */
+nav.navbar .menu,
+nav.navbar .menu .dropdown>.list {
+    align-items: flex-start;
+}
+
+/************************************************************
+ * 導覽列
+ ***********************************************************/
+nav.navbar {
+    z-index: 999;
+    position: -webkit-sticky;
+    position: fixed;
+    top: 107px;
+    left: 0;
+    bottom: 0;
+    flex-wrap: nowrap;
+    /* width: 359px; */
+    /* width: 60px; */
+    
+    box-shadow: 0px 3px 2px var(--shadow);
+    background-color: var(--nav-bg);
+    color: var(--nav-ft);
+    transition: height .5s ease;
+}
+nav.navbar,
+nav.navbar + .placeholder{
+    height: auto;
+}
+nav.navbar,
+nav.navbar + .placeholder,
+nav.navbar .menu .system_buttons>button{
+    width: 72px;
+}
+nav.navbar,
+nav.navbar>* {
+    margin: 0;
+    padding: 0;
+}
+
+nav.navbar,
+nav.navbar>.content,
+nav.navbar .menu,
+nav.navbar .menu .system_buttons {
+    flex-direction: column;
+}
+
+nav.navbar .menu,
+nav.navbar .menu .mask,
+nav.navbar .menu .system_buttons,
+nav.navbar>.content {
+    width: 100%;
+    align-items: center;
+
+}
+
+nav.navbar .menu .system_buttons {
+    padding-top: 20px;
+    gap: 20px;
+}
+
+nav.navbar .menu .system_buttons>button {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--alpha);
+    padding: 0;
+}
+
+nav.navbar .menu .system_buttons>button:hover {
+    background-color: var(--alpha);
+}
+
+nav.navbar .menu .system_buttons .buttonicon {
+    transition: font-size 0.3s ease;
+}
+
+nav.navbar .menu .system_buttons *:hover>.buttonicon {
+    font-size: 24px;
+}
+
+/* 自訂按鈕輔助文字 */
+nav.navbar .menu .system_buttons .word {
+    font-size: 12px;
+}
+
+
+
+/* nav.navbar>.content>.icon {
+    width: 100%;
+    height: 43px;
+    background-color: var(--alpha-30p);
+    align-items: center;
+    justify-content: center;
+} */
+/*登出按鈕顏色*/
+/* nav.navbar button#logout {
+    color: var(--logout-btn-ft);
+    background-color: var(--logout-btn-bg);
+} */
+
+/* nav.navbar button:hover#logout {
+    color: var(--logout-btn-hover-ft);
+    background-color: var(--logout-btn-hover-bg);
+} */
+/************************************************************
+ * 導覽列的內容
+ ***********************************************************/
+
+/************************************************************
+ * RWD 響應式模板
+ ***********************************************************/
+/* Tablets */
+@media (max-width: 768px) {
+
+}
+
+/* Mobile */
+@media (max-width: 481px) {
+
+}

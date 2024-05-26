@@ -1,0 +1,77 @@
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    <div class="flex_th">
+        <!-- <div class="flex_td">權級代碼</div> -->
+        <div class="flex_td" style="flex: 2;">名稱</div>
+        <!-- <div class="flex_td">父級身分組名稱</div> -->
+        <div class="flex_td">人數</div>
+        <div class="flex_td">操作</div>
+    </div>
+    {if isset($roles)}
+    {foreach $roles as $role}
+    {*if $role.status neq 2*}
+    <div class="flex_tr allergic" style="text-align: center;">
+        <!-- <div class="flex_td">
+            <span style="color: var(--accent-ft);">{$role.permissions}</span>
+        </div> -->
+        <div class="flex_td" style="flex: 2;">
+            <span>{$role.displayname}</span>
+            <!-- {if $role.status eq 2}<span class="warn" title="system role">*&nbsp;</span>{/if} -->
+            <span style="color: var(--accent-ft);" title="權限代碼">&nbsp;({$role.permissions})</span>
+        </div>
+        <div class="flex_td">
+            <span>{$role.count}</span>
+        </div>
+        <div class="flex_td flex_tr" style="text-align: center;">
+            <div class="flex_td">
+                {if $role.status eq 2}
+                <!-- <span class="warn" style="width: 100%;">* 不允許操作</span> -->
+                <div class="flex_tr" style="text-align: center;">
+                    <button onclick="return false" disabled>
+                        <span class="fa-solid fa-pen"></span>
+                        <span class="tabletsHidden">編輯</span>
+                    </button>
+                </div>
+                <div class="flex_tr" style="text-align: center;">
+                    <button onclick="return false" disabled>
+                        <span class="fa-solid fa-ban"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </div>
+                {else}
+                <div class="flex_tr">
+                    <button onclick="route('manage.role&rid={$role.id}')">
+                        <span class="fa-solid fa-pen"></span>
+                        <span class="tabletsHidden">編輯</span>
+                    </button>
+                </div>
+                <form class="flex_tr" method="POST" onsubmit="return done(this, 'refresh' , '', false);">
+                    <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                    <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                    <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                    <input name="hash" type="hidden" value="{$role.hashdata}" />
+                    <input name="action" type="hidden" value="GROUP_DELETE" />
+                    <button class="warn">
+                        <span class="fa-solid fa-trash-can"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </form>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <!-- <hr /> -->
+    {*/if*}
+    {/foreach}
+    <hr/>
+    <div class="flex_tr" style="justify-content: center;">
+        <button style="width: 80%;" onclick="route('manage.role')">
+            <span class="fa-solid fa-user-plus"></span>
+            <span>新增身分組</span>
+        </button>
+    </div>
+    {/if}
+</div>

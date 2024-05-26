@@ -24,7 +24,7 @@ class unturnedManage
     private $moderation_playerhwids = "moderation_playerhwids";
     private $moderation_playerinfo = "moderation_playerinfo";
     private $moderation_playerwarns = "moderation_playerwarns";
-    private $ranks = "m_ranks";
+    // private $ranks = "m_ranks";
     public function __construct($db)
     {
         $this->conn = $db;
@@ -49,7 +49,7 @@ class unturnedManage
         if ($tables['moderation_playerhwids']) $this->moderation_playerhwids = $tables['moderation_playerhwids'];
         if ($tables['moderation_playerinfo']) $this->moderation_playerinfo = $tables['moderation_playerinfo'];
         if ($tables['moderation_playerwarns']) $this->moderation_playerwarns = $tables['moderation_playerwarns'];
-        if ($tables['ranks']) $this->ranks = $tables['ranks'];
+        // if ($tables['ranks']) $this->ranks = $tables['ranks'];
     }
     /************************************************
      * ### 取得會員Unturned資訊 ###
@@ -58,9 +58,8 @@ class unturnedManage
     public function getUserInformation($steamId): array
     {
         $sql = "SELECT * FROM `{$this->moderation_playerinfo}` AS `playerinfo`
-        JOIN `{$this->moderation_ipinfo}` AS `ipinfo` ON `ipinfo`.`IP` = `playerinfo`.`IP`
-        JOIN `{$this->uconomy_uconomy}` AS `uconomy` ON `uconomy`.`SteamID` = `playerinfo`.`PlayerID`
-        LEFT JOIN `{$this->ranks}` AS `ranks` ON `ranks`.`steamId` = `playerinfo`.`PlayerID`
+        LEFT JOIN `{$this->moderation_ipinfo}` AS `ipinfo` ON `ipinfo`.`IP` = `playerinfo`.`IP`
+        LEFT JOIN `{$this->uconomy_uconomy}` AS `uconomy` ON `uconomy`.`SteamID` = `playerinfo`.`PlayerID`
         WHERE `playerinfo`.`PlayerID` = ? ;";
         $result = $this->conn->prepare($sql, [$steamId]);
         if (empty($result)) return [];

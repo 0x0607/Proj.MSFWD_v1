@@ -10,38 +10,39 @@ if (basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'])) exit;
  * array $DATA : 數據
  * 
  ****************************************************************************************/
-$path = $DATA['path'] . "?v=" . $sf->getId();
-$result = false;
+$respondJson = ["status" => 200, "data" => "0|NO"];
+// 如果有上傳的圖片才會觸發
 if (isset($_FILES['uploadfile'])) {
+    $uploadedFiles = $_FILES['uploadfile'];
+    $filePath = [];
+    $imageResult = false;
     switch ($ACTION) {
             // 變更使用者圖片
-        case "USER_CHANGE_AVATAR":
-            $file->setPath("avatar");
-            $filePath = $file->upload($_FILES['uploadfile'], $_SESSION['mid']);
-            $memberManage->updateMemberInformation($mid, ["profile" => ["avatar" => $path]]);
+        case "USER_CHANGE_INFORMATION":
+            $file->setPath(CONFIG_PATH['avatar'] . "/" . $_SESSION['member']['mid']);
+            $filePath = $file->upload($uploadedFiles, 'avatar');
+            if (!empty($filePath)) $DATA['avatar'] = $filePath[0];
             break;
             // 變更網站圖示
-        case "WEBSITE_CHANGE_ICON":
-            $file->setPath("website");
-            $filePath = $file->upload($_FILES['uploadfile'], WEBSITE_ID);
-            $websiteManage->updateWebsiteInformation(WEBSITE_ID, ["website" => ["icon" => $path]]);
+        case "WEBSITE_CHANGE_INFORMATION":
+            $file->setPath(WEBSITE_FILE_DIR);
+            $filePath = $file->upload($uploadedFiles, 'icon');
+            if (!empty($filePath)) $DATA['icon'] = $filePath[0];
             break;
             // 變更商品圖示
-        case "PRODUCT_CHANGE_IMAGE":
-            // $file->setPath("products");
-            // $filePath = $file->upload($_FILES['uploadfile'], $DATA['product_id']);
-            // if (!isset($DATA['product_id'], $data['image_num'])) {
-            //     $LOG_STATUS_CODE["api.updateImage"] = "0|{$ACTION}";
-            //     $REASON = "Invalid picture number or product number.";
-            // }
-            // $productInformation = $productManage->getProductInformation(WEBSITE_ID, $DATA['product_id']);
-            // $productImages = $productInformation['images'];
-            // $productImages[$data['image_num']] = $path;
-
-            // $productManage->updateProductInformation(WEBSITE_ID, $DATA['product_id'], ["images" => json_encode($productImages)]);
+        case "PRODUCT_ADD":
+        case "PRODUCT_CHANGE_INFORMATION":
+            // 新的商品新增一個一個一個pid
+            if (!isset($DATA['pid']) && $ACTION == 'PRODUCT_ADD')  $DATA['pid'] = $sf->getId();
+            if (isset($DATA['pid'])) {
+                $file->setPath(WEBSITE_FILE_DIR . "/products" );
+                $filePath = $file->upload($uploadedFiles, $DATA['pid']);
+                if (!empty($filePath)) $DATA['productImages'] = $filePath;
+            }
             break;
     }
 }
 /****************************************************************************************/
-if ($result) $LOG_REASON["api"] = "Success.";
-else $LOG_REASON["api"] = "Invalid file updload.";
+    // if ($imageResult) $LOG_REASON["api"] = "Success.";
+    // else $LOG_REASON["api"] = "Invalid file updload.";
+    // if (!$imageResult) $LOG_REASON["api"] = "Invalid file updload.";

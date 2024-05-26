@@ -1,0 +1,21 @@
+{if isset($webnav)}{include file="nav/nav.default.htm"}{/if}
+<!-- <article style="min-height: 96.7vh;"> -->
+<article class="main" id="webMain" {$MAIN_GRID_SETTING}>
+    {foreach $pageComponents as $key => $component }
+    <section id="{$component.id}" {$component.style}>
+        {* 請從 $component.param 抓取元件參數 *}
+        <!-------------------------------->
+        <!-- 元件ID: {$component.id} {*必要項*} -->
+        <!-- 元件名稱: {if isset($component.displayname)}{$component.displayname}{else}unknown{/if} -->
+        <!-- 元件版本: {if isset($component.version)}{$component.version}{else}unknown{/if} -->
+        <!-- 建立時間: {if isset($component.created_at)}{$component.created_at}{else}unknown{/if} -->
+        {include file="{$dir}/components/{$component.template}.htm"}
+    </section>
+    {foreachelse}
+    <section style="height: 100vh;"></section>
+    {/foreach}
+</article>
+<!-- <footer style="width: 100%;">
+    © Snkms.com 天夜之心開發工作室. SINCE 2013.｜ 前端設計 Design By: <a href="#">{$design}</a>｜ 後端設計 Develop By: <a
+        href="#">{$author}</a>
+</footer> -->

@@ -1,0 +1,14 @@
+{
+    "1.0": {
+        "method": {
+            "multiplier": 1,
+            "value": {
+                "method": {
+                    "type": "text",
+                    "displayname": "配置模式",
+                    "default": ""
+                }
+            }
+        }
+    }
+}

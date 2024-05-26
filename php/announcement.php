@@ -7,7 +7,7 @@ $LOG_REASON["announcement"] = "";
  * 
  ****************************************************************************************/
 // 引入的CSS及JS
-$includeCss[]="./css/announcement.css";
-$includeJs[] = "./javascripts/announcementSwitch.js";
+$INCLUDE_CSS[]="/css/announcement.css";
+$INCLUDE_JS[] = "/javascripts/announcementSwitch.js";
 /****************************************************************************************/
 ?>

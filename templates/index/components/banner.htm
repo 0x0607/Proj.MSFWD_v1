@@ -1,0 +1,38 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+{if $component.param.style eq 0}
+<!-- banner1 -->
+<div class="banner" >
+    <div class="banner-image">
+        <img src="{$component.param.image}" style="width: {if isset({$component.param.imgsize})}{$component.param.imgsize}; margin: 0 auto;{else}220px;{/if}">
+    </div>
+    {if isset($component.param.message)}
+    {foreach $component.param.message as $msg}
+    <p>{$msg}</p>
+    {/foreach}
+    {/if}
+    {foreach $component.param.button as $button}
+    <button onclick="window.location.href='{$button.link}'">{$button.displayname}</button>
+    {/foreach}
+</div>
+<!-- banner1 EOF -->
+{elseif $component.param.style eq 1}
+<!-- banner2 -->
+<div class="banner">
+    <span class="banner-title">
+        {foreach $component.param.message as $msg}
+        {if $msg@first}
+        <h1>{$msg}</h1>
+        {else}
+        <h2>{$msg}</h2>
+        {/if}
+        {/foreach}
+    </span><br/>
+    <div class="banner-image" style="gap: 10px;">
+        {foreach $component.param.image as $img}
+        <img src="{$img}" style="width: 256px;">
+        {/foreach}
+    </div>
+</div>
+<!-- banner2 EOF -->
+{/if}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-{if isset($debugInfo)}
+{if isset($TEST)}
 <!--[!------DEBUG------!]----------------------------------------------------------------------------------->
-{$debugInfo}
+{$TEST}
 {/if}
 <!-----------------------------------------------------------------
                   888                           
@@ -26,53 +26,56 @@ Design設計師:       {$design}
 <html {if isset($language)}lang="{$language}" {/if} oncontextmenu="return false">
 
 <head oncontextmenu="window.event.returnValue=false;">
+    <!--GLOBAL---------------------------------------------------------------------------------------------------->
+    <script>
+        console.log("[website_version] {$version}");
+        // API位址 {*通常為 https://[domainName]/api/*}     
+        localStorage.setItem("APIURL", '{$SERVER_API_URL}');
+        // 除錯模式
+        localStorage.setItem("DEBUG", '{$SERVER_DEBUG}');
+        // 上一個頁面
+        localStorage.setItem("HTTP_REFERER", '{$SERVER_HTTP_REFERER}');
+        // 頁面開始載入時間
+        const pageStartTime = performance.now();
+    </script>
     <!--Meta---------------------------------------------------------------------------------------------------->
     <!--{if isset($keywords)}<meta name="keywords" content="{section name=i loop=$keywords}{$keywords[i]} {/section}">{/if}-->
-    {if isset($description)}
-    <meta name="description" content="{$description}">{/if}
+    {if isset($description)}<meta name="description" content="{$description}">{/if}
 
-    {if isset($author)}
-    <meta name="author" content="{$author}">{/if}
+    {if isset($author)}<meta name="author" content="{$author}">{/if}
 
     <!--{if isset($author)}<meta name="copyright" content="{$author}">{/if}-->
-    {if isset($generator)}
-    <meta name="generator" content="{$generator}">{/if}
+    {if isset($generator)}<meta name="generator" content="{$generator}">{/if}
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    {if isset($distribution)}
-    <meta name="distribution" content="{$distribution}">{/if}
+    {if isset($distribution)}<meta name="distribution" content="{$distribution}">{/if}
 
-    {*if isset($themeColor.body)*}
-    <!-- <meta name="theme-color" content="{*$themeColor.body*}"> -->{*/if*}
+    {*if isset($themeColor.body)*}<!-- <meta name="theme-color" content="{*$themeColor.body*}"> -->{*/if*}
 
-    {if isset($siteName)}
-    <meta property="og:site_name" content="{$siteName}">{/if}
+    {if isset($siteName)}<meta property="og:site_name" content="{$siteName}">{/if}
 
-    {if isset($title)}
-    <meta property="og:title" content="{$title}">{/if}
+    {if isset($title)}<meta property="og:title" content="{$title}">{/if}
 
-    {if isset($description)}
-    <meta property="og:description" content="{$description}">{/if}
+    {if isset($description)}<meta property="og:description" content="{$description}">{/if}
 
-    {if isset($ogimage)}
-    <meta property="og:image" content="{$ogimage}">{/if}
+    {if isset($ogimage)}<meta property="og:image" content="{$ogimage}">{/if}
 
-    {if isset($language)}
-    <meta http-equiv="Content-Language" content="{$language}">{/if}
+    {if isset($language)}<meta http-equiv="Content-Language" content="{$language}">{/if}
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!--Link---------------------------------------------------------------------------------------------------->
-    {if isset($icon)}
-    <link rel="icon" type="image/x-icon" href="{$icon}">{/if}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {if isset($icon)}<link rel="icon" type="image/x-icon" href="{$icon}">{/if}
+
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.brands.min.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    {section name=i loop=$css}
-    <link rel="stylesheet" type="text/css" href="{$css[i]}">
-    {sectionelse}<!--no css-->{/section}
+    {section name=i loop=$css}<link rel="stylesheet" type="text/css" href="{$css[i]}?v={$version}">
+    {sectionelse}<!-- no css -->{/section}
+
+    <!-- Color -->
+    <link rel="stylesheet" type="text/css" href="{$themeColorCss}">
     <!---------------------------------------------------------------------------------------------------------->
 </head>
 <title>{if isset($title)}{$title}{else}unknow{/if}</title>
-
-<body class="primaryColor primaryBgColor" {if isset($randMessage)}{$randMessage}{/if} {if
-    isset($newBodyImage)}style="{$newBodyImage}" {/if}>
-    {*include file="navbar.htm"*}
+<body>

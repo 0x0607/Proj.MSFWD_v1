@@ -1,0 +1,141 @@
+<form class="flex_table" method="POST" onsubmit="return done(this, 'refresh' , 'ERROR_MESSAGE');">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    <div class="flex_tr">
+        <span class="warn">* 本功能維護中....</span>
+    </div>
+    <div class="flex_th" style="justify-content: center;">
+        <div id="demoPreview">
+            <div class="browserTitle">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+                <span class="title">{$web_name}</span>
+            </div>
+            <div class="browserSearch"></div>
+            <div id="promptboxNav" style="background-color: var(--nav-bg);color: var(--nav-btn-ft);">導覽列</div>
+            <div id="browserContent" style="background-color: var(--sunbaby-bg);">
+                <div id="promptboxTitle" style="background-color: var(--primary-bg-alpha50p);color: var(--nav-btn-ft);">
+                    標題
+                </div>
+                <div id="promptboxContent" class="flex_table" style="background-color: var(--alpha-30p);">
+                    <div class="flex_tr">
+                        <div class="flex_td">
+                            <div id="promptboxContentText" style="color: var(--primary-ft);">內容</div>
+                        </div>
+                        <div class="flex_td">
+                            <div id="promptboxAccentContentText" style="color: var(--accent-ft);">內容</div>
+                        </div>
+                    </div>
+                    <div class="flex_tr">
+                        <div class="flex_td">
+                            <a id="promptboxHyperlink" style="color: var(--link-ft);" href="#Hyperlink">沒選取的超連結</a>
+                        </div>
+                        <div class="flex_td">
+                            <a id="promptboxHyperlinkHover" style="color: var(--link-hover-ft);"
+                                href="#Hyperlink">被選取的超連結</a>
+                        </div>
+                    </div>
+                    <div class="flex_tr">
+                        <div class="flex_td">
+                            <button id="promptboxContentButton"
+                                style="background-color: var(--primary-btn-bg);color: var(--primary-btn-ft);"
+                                disabled>沒選取的按紐</button>
+                        </div>
+                        <div class="flex_td">
+                            <button id="promptboxContentButtonHover"
+                                style="background-color: var(--primary-btn-hover-bg);color: var(--primary-btn-hover-ft);"
+                                disabled>被選取的按紐</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <h2>色調設置</h2>
+    <div class="flex_tr">
+        <div class="flex_td">
+            <select id="theme_color" name="theme_color" oninput="changeThemeColor(this.value)">
+                <option value="" disabled="" selected="" hidden="">- select theme color -</option>
+                <option value="default">默認藍黑</option>
+                <option value="red">別緻紅</option>
+                <option value="phub">橙人之美</option>
+                <option value="steam">蒸氣</option>
+                <option value="snkms">天夜之心</option>
+            </select>
+        </div>
+    </div>
+    <br /> -->
+    <!-- <h2>自訂色調設置</h2>
+    <div class="flex_tr">
+        <div class="flex_td">{$color['primary-bg']['label']}：<input id="primaryBackground" name="primary-bg"
+                value="{$color['primary-bg']['color']}" type="color" oninput="userChangeColor()" /></div>
+        <div class="flex_td">{$color['primary-ft']['label']}：<input id="primaryFont" name="primary-ft"
+                value="{$color['primary-ft']['color']}" type="color" oninput="userChangeColor()" /></div>
+        <div class="flex_td"></div>
+    </div>
+    <div class="flex_tr">
+        <div class="flex_td">{$color['accent-bg']['label']}：<input id="secondary" name="secondary"
+                value="{$color['accent-bg']['color']}" type="color" oninput="userChangeColor()" /></div>
+        <div class="flex_td">{$color['accent-ft']['label']}：<input id="secondaryBackground" name="secondaryBackground"
+                value="{$color['accent-ft']['color']}" type="color" oninput="userChangeColor()" /></div>
+
+        <div class="flex_td">{$color['sunbaby-bg']['label']}：<input id="primary" name="primary"
+                value="{$color['sunbaby-bg']['color']}" type="color" oninput="userChangeColor()" /></div>
+    </div>
+    <div class="flex_tr">
+        <div class="flex_td">
+            啟用進階色調配置&nbsp;<span class="warn">[！] 專業配置，請斟酌使用。</span>
+            <label class="switch">
+                <input id="enableAdvancedSetting" type="checkbox" onchange="enableAdvSetting(this.checked)" checked>
+                <span class="slider"></span>
+            </label>
+
+        </div>
+    </div> -->
+    <!-- <div id="advancedSetting"> -->
+    <h2 class="flex_tr">進階色調設置</h2>
+    <div class="flex_tr">
+        {foreach $color as $key => $value}
+        {if isset($value['label'])}
+        <div class="flex_td flex_tr">
+            <span class="flex_td">{$value['label']}</span>
+            <span class="flex_td"><input id="{$key}" name="{$key}"
+                    value="{if isset($value['color'])}{$value['color']}{/if}" type="color" oninput="userChangeColor()"
+                    disabled /></span>
+        </div>
+        {else}
+        <div class="flex_td"></div>
+        {/if}
+        {if ($value@iteration mod 3) eq 0}
+    </div>
+    <div class="flex_tr">{/if}
+        {/foreach}
+    </div>
+    <!-- </div> -->
+    <div class="flex_tr" style="text-align: center;align-items: center;justify-content: center;">
+        <!-- ERROR MESSAGE {* $ERROR_MESSAGE 為 PHP 印製之錯誤訊息，不用理它. *} -->
+        <span id="ERROR_MESSAGE" class="warn errorMessage">{if
+            isset($ERROR_MESSAGE)}{$ERROR_MESSAGE}{else}&nbsp;{/if}</span>
+        <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+        <input name="iv" type="hidden" value="{$SERVER_IV}" />
+        <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+        <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+        <!-- 動作代碼 -->
+        <button name="action" value="WEBSITE_CHANGE_THEME" type="submit">
+            <span class="fa-solid fa-pen"></span>
+            <span>變更</span>
+        </button>
+    </div>
+</form>
+
+<!-- <div class="flex_td">
+                將按鈕顏色鎖定為對比色
+                <label class="switch">
+                    <input id="enablelockButtonColorSetting" type="checkbox"
+                        onchange="lockButtonColorSetting(this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div> -->

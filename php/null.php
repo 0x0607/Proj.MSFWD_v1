@@ -7,8 +7,8 @@ $LOG_REASON["null"] = "";
  * 
 ****************************************************************************************/
 // 引入的CSS及JS
-// $includeCss[]="./css/".WEBSITE['stylesheet']."/.css";
-// $includeCss[]="./css/.css";
-// $includeJs[] = "./javascripts/.js";
+// $INCLUDE_CSS[]="./css/".WEBSITE['stylesheet']."/.css";
+// $INCLUDE_CSS[]="./css/.css";
+// $INCLUDE_JS[] = "./javascripts/.js";
 /****************************************************************************************/
 ?>

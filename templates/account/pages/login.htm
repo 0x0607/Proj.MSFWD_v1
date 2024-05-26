@@ -1,0 +1,56 @@
+<!-- login -->
+<article class="account">
+    <form class="content" method="POST" onsubmit="return done(this, '/account/' , 'LOGIN_ERROR_MESSAGE');">
+        <div class="icon">
+            <img src="{$icon}" />
+        </div>
+        <div class="information">
+            <div class="title">
+                <h2>LOGIN</h2>
+                <span>登入您的帳戶</span>
+            </div>
+            <div class="textbox">
+                <div class="textinput">
+                    <input value="{if isset($last_account)}{$last_account}{/if}" type="text" placeholder="Account" name="account" id="account" maxlength="18"
+                        pattern="[a-zA-Z0-9\._\-#@$]+" required />
+                    <span class="fa-solid fa-id-card inputicon"></span>
+                </div>
+                <div class="textinput">
+                    <input type="password" placeholder="Password" name="password" id="password" maxlength="513"
+                        onfocus="clearInput(this)" oninput="sha256(this)" hash="" required />
+                    <span class="fa-solid fa-key inputicon"></span>
+                </div>
+                <div style="width: 100%;" title="如果這是公用電腦請不要勾選記住帳號">
+                    <span>記住帳號</span>
+                    <label class="switch">
+                        <input name="remember_account" type="checkbox" {if isset($last_account)}checked{/if}>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button name="action" value="USER_LOCAL_LOGIN">LOGIN</button>
+                <span class="gray">或</span>
+                <div class="other_login">
+                    <a class="fa-brands fa-steam" href="?route=login&login=steam" title="使用Steam登入"></a>
+                    <!-- <a class="fa-brands fa-discord" href="?route=login"></a>
+                    <a class="fa-brands fa-facebook" href="?route=login"></a>
+                    <a class="fa-brands fa-line" href="?route=login"></a>
+                    <a class="fa-brands fa-google" href="?route=login"></a> -->
+                </div>
+                <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+                <!-- 動作代碼 -->
+                <a id="register" href="?route=register">沒有帳號嗎? 建立一個新用戶</a>
+            </div>
+        </div>
+        <div class="other_link">
+            <a id="backhome" href="/?route=home">BACK</a>
+            <span class="divider">｜</span>
+            <a href="##" id="privacy_policy">隱私權守則 Privacy Policy</a>
+        </div>
+    </form>
+</article>
+<!-- login EOF-->
+<!-- <div style="text-align: center;">我們將遵守協議 <a href="https://steamcommunity.com/dev/apiterms"
+                    target="_blank">[Steam Web API Terms of Use]</a></div> -->

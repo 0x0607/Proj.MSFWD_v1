@@ -1,0 +1,164 @@
+/*************************************************************
+ * 
+ * CSS樣式設定 - 管理員頁面專用
+ * By Yin, MaizuRoad
+ * 
+ *************************************************************/
+/* 字體 */
+/************************************************************/
+/*@font-face {
+    font-family: "JhengHei";
+    src: url("/css/font/JhengHei.ttf");
+}*/
+
+/* @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css); */
+/* @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(./font/fa-solid-900.ttf);
+} */
+/* @import url(font-awesome.min.css); */
+/************************************************************/
+/* 禁用所有元素文字選取 */
+* {
+    /* font-family: "cwTeXYen", "sans-serif", "JhengHei", "微軟正黑體 Light", "黑體-繁"; */
+    font-family: "JhengHei", "微軟正黑體 Light", "黑體-繁";
+    vertical-align: baseline;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+/************************************************************
+ * 上方導覽列(固定)
+ ***********************************************************/
+nav.top {
+    z-index: 1000;
+    position: -webkit-sticky;
+    position: sticky;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    top: 0;
+    background-color: var(--nav-bg);
+}
+nav.top{
+/* nav.top+.placeholder{ */
+    height: 107px;
+}
+/* LOGO */
+nav.top>.content>.icon>img{
+    height: 48px;
+}
+/* 導覽列內容 */
+nav.top>.content {
+    background-color: var(--alpha-30p);
+    justify-content: space-between;
+}
+
+nav.top>.content>.system_buttons button,
+nav.top>.content {
+    height: 64px;
+}
+
+nav.top>.content>.system_buttons button{
+    width: 64px;
+}
+
+nav.top>.breadcrumb {
+    height: 43px;
+    background-color: var(--alpha-20p);
+    align-items: center;
+    line-height: 1;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+nav.top>.content,
+nav.top>.content>.icon,
+nav.top>.content>.system_buttons,
+nav.top>.breadcrumb {
+    display: flex;
+    align-items: center;
+    /* flex-direction: row; */
+    /* justify-content: center; */
+}
+
+nav.top>.content>.icon,
+nav.top>.breadcrumb {
+    gap: 8px;
+}
+
+nav.top>.content>.icon *{
+    margin: 0;
+}
+
+nav.top>.content,
+nav.top>.breadcrumb {
+    width: 100%;
+    padding-left: 20px;
+}
+
+nav.top>.content>.system_buttons button{
+    color: var(--primary-btn-ft);
+    background-color: var(--primary-btn-bg);
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+nav.top>.content>.system_buttons button:hover{
+    color: var(--primary-btn-hover-ft);
+    background-color: var(--primary-btn-hover-bg);
+}
+nav.top>.content>.system_buttons button > .word {
+    font-size: 12px;
+}
+
+/*登出按鈕顏色*/
+nav.top button#logout {
+    color: var(--logout-btn-ft);
+    background-color: var(--logout-btn-bg);
+}
+
+nav.top button:hover#logout {
+    color: var(--logout-btn-hover-ft);
+    background-color: var(--logout-btn-hover-bg);
+}
+/* input[readonly],
+select[disabled],
+textarea[readonly] {
+    background-color: #888888;
+} */
+
+/************************************************************
+ * 主要內容顯示區域
+ ***********************************************************/
+#setting {
+    flex-grow: 1;
+    height: 100%;
+    max-width: 80%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/***********************************************************/
+.widget {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    max-width: 40rem;
+    width: 100%;
+    min-width: 20rem;
+}
+
+.widget canvas {
+    min-height: 20rem;
+}
+
+/***********************************************************
+    廢棄區域
+***********************************************************/

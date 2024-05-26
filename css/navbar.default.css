@@ -1,0 +1,404 @@
+/*************************************************************
+ * 
+ * 預設導覽列
+ * By Maizuru(MaizuRoad)
+ * 
+ *************************************************************/
+/************************************************************
+ * 管理者頁面按鈕
+ ***********************************************************/
+@keyframes animationManageButton {
+    0% {
+        transform: translateX(0%) rotate(0deg);
+    }
+
+    16% {
+        transform: translateX(40%);
+    }
+
+    32% {
+        transform: translateX(40%) rotate(8deg);
+    }
+
+    48% {
+        transform: translateX(40%) rotate(-8deg);
+    }
+
+    64% {
+        transform: translateX(40%);
+    }
+
+    100% {
+        transform: translateX(0%) rotate(0deg);
+    }
+}
+
+
+button#manage {
+    z-index: 998;
+    position: fixed;
+    color: var(--nav-btn-ft);
+    background-color: var(--alpha-50p);
+    box-shadow: 0px 3px 2px var(--shadow);
+    /* backdrop-filter: blur(16px) saturate(120%); */
+    top: 20%;
+    left: -50px;
+    width: 60px;
+    height: 60px;
+    border-radius: 0 10px 10px 0;
+    font-size: 32px;
+    transition: left .3s ease-in-out, background-color .5s ease-in-out, color .5s ease-in-out;
+    animation-name: animationManageButton;
+    animation-duration: 2s;
+    animation-delay: 3s;
+    /* animation-iteration-count: 2; */
+    /* animation-iteration-count: infinite; */
+}
+
+button#manage:hover {
+    color: var(--nav-btn-hover-ft);
+    background-color: var(--alpha-60p);
+    animation: none;
+    left: 0%;
+}
+
+/************************************************************
+ * flex 彈性盒子布局
+ ***********************************************************/
+nav.navbar,
+nav.navbar>.content,
+nav.navbar .icon,
+nav.navbar .menu,
+nav.navbar .menu .customize_buttons,
+nav.navbar .menu .dropdown>.list,
+nav.navbar>.breadcrumb {
+    display: flex;
+}
+
+/************************************************************
+ * align-items: center 物件置中
+ ***********************************************************/
+nav.navbar>.content,
+nav.navbar .icon,
+nav.navbar .menu,
+nav.navbar .menu .dropdown>.list,
+nav.navbar>.breadcrumb {
+    align-items: center;
+}
+
+/************************************************************
+ * 導覽列
+ ***********************************************************/
+nav.navbar {
+    z-index: 999;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    height: 108px;
+    box-shadow: 0px 3px 2px var(--shadow);
+    background-color: var(--nav-bg);
+    color: var(--nav-ft);
+    transition: height .5s ease;
+}
+
+nav.navbar,
+nav.navbar>* {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/************************************************************
+ * 導覽列的內容
+ ***********************************************************/
+/* 按鍵布局 */
+nav.navbar>.content {
+    justify-content: inherit;
+    height: 64px;
+}
+
+/* 麵包屑導覽 */
+nav.navbar>.breadcrumb {
+    height: 43px;
+    border-top: 0.5px solid var(--alpha-10p);
+    color: var(--primary-ft);
+    background-color: var(--alpha-20p);
+    border-radius: 0;
+    /* transition: height .3s ease; */
+}
+
+/* 左側留空 */
+nav.navbar .icon,
+nav.navbar>.breadcrumb {
+    padding-left: 20px;
+    gap: 8px;
+}
+
+/************************************************************
+ * 導覽列的Logo
+ ***********************************************************/
+nav.navbar .icon,
+nav.navbar .icon:hover,
+nav.navbar .icon>* {
+    color: var(--nav-icon-ft);
+}
+
+nav.navbar .icon>* {
+    margin: 0;
+}
+
+nav.navbar .icon>img {
+    width: 48px;
+}
+
+/************************************************************
+ * 導覽列的按鍵布局
+ ***********************************************************/
+/*按鈕預設顏色*/
+nav.navbar button {
+    color: var(--nav-btn-ft);
+    background-color: var(--nav-btn-bg);
+}
+
+nav.navbar button:hover {
+    color: var(--nav-btn-hover-ft);
+    background-color: var(--nav-btn-hover-bg);
+}
+
+/*登入及帳戶按鈕顏色*/
+nav.navbar button#login,
+nav.navbar button#account {
+    color: var(--primary-btn-ft);
+    background-color: var(--primary-btn-bg);
+}
+
+nav.navbar button#login:hover,
+nav.navbar button#account:hover {
+    color: var(--primary-btn-hover-ft);
+    background-color: var(--primary-btn-hover-bg);
+}
+
+/*設置帳戶按鈕顏色*/
+nav.navbar button#setting_account {
+    color: var(--accent-btn-ft);
+    background-color: var(--accent-btn-bg);
+}
+
+nav.navbar button#setting_account:hover {
+    color: var(--accent-btn-hover-ft);
+    background-color: var(--accent-btn-hover-bg);
+}
+
+/*登出按鈕顏色*/
+nav.navbar button#logout {
+    color: var(--logout-btn-ft);
+    background-color: var(--logout-btn-bg);
+}
+
+nav.navbar button:hover#logout {
+    color: var(--logout-btn-hover-ft);
+    background-color: var(--logout-btn-hover-bg);
+}
+
+/* 系統按鈕布局 */
+nav.navbar .menu>.system_buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding-left: 20px;
+}
+
+/* 系統按鈕 */
+nav.navbar .menu>.system_buttons button {
+    /* padding: 0; */
+    /* background-color: transparent; */
+    min-width: 64px;
+    min-height: 64px;
+    border-radius: 0;
+}
+
+/* 系統按鈕的輔助文字 */
+nav.navbar .menu>.system_buttons .word {
+    font-size: 12px;
+}
+
+nav.navbar .menu>.system_buttons button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 自訂按鈕布局 */
+nav.navbar .menu .customize_buttons {
+    gap: 20px;
+}
+
+/* 自訂按鈕 */
+/* nav.navbar .menu .system_buttons button.hamburgermenu, */
+nav.navbar .menu .customize_buttons button {
+    width: auto;
+    background-color: transparent;
+}
+
+/* 下拉式清單布局 */
+nav.navbar .menu .dropdown>.list {
+    position: absolute;
+    top: 49px;
+    right: 0;
+    padding: 8px;
+    width: auto;
+    min-width: 200px;
+    border-radius: 0 0 12px 12px;
+    transition: 0.35s;
+    flex-direction: column;
+    color: var(--nav-btn-ft);
+    background: var(--nav-dropdown-bg);
+    /* backdrop-filter: blur(4px) saturate(110%); */
+    /* background-color: var(--nav-bg); */
+    box-shadow: 0px 3px 2px var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* 下拉式清單布局選取 */
+nav.navbar .menu .dropdown:hover>.list,
+nav.navbar .menu .dropdown:active>.list {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 下拉式清單按鈕 */
+nav.navbar .menu .dropdown>.list>button {
+    /* background-color: #00000099; */
+    border-radius: 0;
+    padding: 10px 20px;
+    min-height: 32px;
+    line-height: 1;
+}
+
+/* 收合按鈕 */
+nav.navbar .menu #backhome,
+nav.navbar .menu .hamburgermenu {
+    display: none;
+}
+
+/************************************************************
+ * RWD 響應式模板
+ ***********************************************************/
+/* Tablets */
+@media (max-width: 768px) {
+
+    /************************************************************
+    * 管理者頁面按鈕
+    ***********************************************************/
+    /* 小視窗則常駐 */
+    button#manage {
+        left: 0%;
+        animation: none;
+    }
+
+    /************************************************************
+    * 導覽列
+    ***********************************************************/
+    /* 降低導覽列高度 */
+    nav.navbar {
+        height: 64px;
+    }
+
+    /* 隱藏麵包屑導覽 */
+    nav.navbar>.breadcrumb {
+        display: none;
+    }
+
+    /************************************************************
+    * 自訂按鈕布局
+    ***********************************************************/
+    /* 自訂按鈕背景遮罩，透過JS改變其顯示位置 */
+    nav.navbar .menu .mask {
+        position: fixed;
+        top: 89%;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        padding: 16px;
+        background-color: var(--alpha-60p);
+        backdrop-filter: blur(16px) saturate(120%);
+        border-radius: 20px 20px 0 0;
+        transition: top .5s ease;
+    }
+
+    /* 自訂按鈕布局 */
+    nav.navbar .menu .customize_buttons {
+        margin: 0 auto;
+        width: 100%;
+        height: auto;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+
+    /* 自訂按鈕布局，以40px作為行與行之間的分隔 */
+    nav.navbar .menu .customize_buttons>* {
+        margin-bottom: 40px;
+    }
+
+    /* 自訂按鈕 */
+    nav.navbar .menu #backhome,
+    nav.navbar .menu .customize_buttons button {
+        height: 64px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 自訂按鈕圖示 */
+    nav.navbar .menu .customize_buttons .buttonicon {
+        font-size: 24px;
+        transition: font-size 0.3s ease;
+    }
+
+    nav.navbar .menu .customize_buttons *:hover>.buttonicon {
+        font-size: 32px;
+    }
+
+    /* 自訂按鈕輔助文字 */
+    nav.navbar .menu .customize_buttons .word {
+        font-size: 12px;
+    }
+
+    /* 下拉選單 */
+    nav.navbar .menu .dropdown>.list {
+        position: fixed;
+        left: 0;
+        top: -20%;
+        background: var(--alpha-80p);
+        border-radius: 22px;
+        /* backdrop-filter: blur(16px) saturate(120%); */
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        height: 150px;
+    }
+
+
+}
+
+/* Mobile */
+@media (max-width: 481px) {
+
+    /* 手機版面隱藏LOGO圖片 */
+    nav.navbar .icon img {
+        display: none;
+    }
+
+    /* 下拉選單 */
+    nav.navbar .menu .dropdown>.list {
+        top: -40%;
+        height: 200px;
+    }
+}

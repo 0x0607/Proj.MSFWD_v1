@@ -1,0 +1,80 @@
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    {foreach $navbar_information as $navbar}
+    <details>
+        <summary class="flex_tr">
+            <div class="flex_td" style="flex:2;">
+                <span class="buttonicon fa-solid {if isset($navbar.icon)}fa-{$navbar.icon}{else}star{/if}"></span>
+                <span class="word">{$navbar.displayname}</span>
+            </div>
+            <form class="flex_td" method="POST" onsubmit="return false;">
+                <label class="switch" style="margin: 0 auto;">
+                    <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                    <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                    <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                    <input name="hash" type="hidden" value="" />
+                    <input name="action" type="hidden" value="TEST" />
+                    <input type="checkbox" onchange="return done(this.form, false , 'ERROR_MESSAGE', false);" {if
+                        $navbar.status}checked{/if}>
+                    <span class="slider"></span>
+                </label>
+            </form>
+            <div class="flex_td">
+                <div class="flex_tr">
+                    <button onclick="route('')">
+                        <span class="fa-solid fa-pen"></span>
+                        <span class="tabletsHidden">編輯</span>
+                    </button>
+                    <form class="flex_td" method="POST"
+                        onsubmit="return done(this, 'refresh' , 'ERROR_MESSAGE', false);">
+                        <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                        <input name="iv" type="hidden" value="" />
+                        <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                        <input name="hash" type="hidden" value="" />
+                        <input name="action" type="hidden" value="TEST" />
+                        <button class="warn">
+                            <span class="fa-solid fa-trash-can"></span>
+                            <span class="tabletsHidden">刪除</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </summary>
+        <div class="flex_tr">
+            <div>
+                {if is_array($navbar.link)}
+                {foreach $navbar.link as $dropdown}
+                <!-- <div class="flex_td">
+                <span class="buttonicon fa-solid {if isset($dropdown.icon)}fa-{$dropdown.icon}{else}star{/if}"></span>
+                <span class="word">{$dropdown.displayname}</span>
+                </div> -->
+                超連結位址:<a href="{$dropdown.link}" target="_blank">{$dropdown.link}</a><br />
+                {/foreach}
+                {else}
+                超連結位址:<a href="{$dropdown.link}" target="_blank">{$navbar.link}</a>
+                {/if}
+            </div>
+        </div>
+    </details>
+    {/foreach}
+</div>
+<details>
+    <summary style="margin: 0 auto;width: 100%;color: gray; text-align: center;">
+        查看說明
+    </summary>
+    <div class="flex_table">
+        <div class="title">
+            <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+            <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}-說明</span>
+        </div>
+        <div style="width: 80%;margin: 50px auto;">
+            <img src="/assets/images/navabrdemo.gif" style="width: 100%;">
+        </div>
+        <div style="width: 80%;margin: 50px auto;">
+            導覽列具有主要及次級導覽列，可透過此處新增
+        </div>
+    </div>
+</details>

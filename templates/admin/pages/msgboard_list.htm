@@ -1,0 +1,234 @@
+<details open>
+    <summary style="margin: 30px auto;width: 100%;color: gray; text-align: center;">
+        收合分類
+    </summary>
+    <div class="flex_table" method="POST">
+        <div class="title">
+            <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+            <span>新建公告分類</span>
+        </div>
+        <div class="flex_th" style="text-align: center;">
+            <div class="flex_td" style="flex: 3;">
+                <span>分類名稱</span>
+            </div>
+            <!-- <div class="flex_td">
+            <span>狀態</span>
+        </div> -->
+            <div class="flex_td">
+                <span>編輯</span>
+            </div>
+        </div>
+        {if isset($messagesTypes)}
+        {foreach $messagesTypes as $key => $mType}
+        <form id="messagesType_{$key}" class="flex_tr allergic" style="text-align: center;" method="POST"
+            onsubmit="return done(this, 'refresh' , '', false);">
+            <div class="flex_td" style="flex: 3;">
+                <input name="typename" type="text" value="{$mType.type}" />
+            </div>
+            <!-- <div class="flex_td" >
+            <label class="switch" style="margin: 0 auto;">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div> -->
+            <div class="flex_td">
+                <div class="flex_tr">
+                    <button onclick="setAction('messagesType_{$key}','MSGBOARD_CHANGE_TYPE')">
+                        <span class="fa-solid fa-pencil"></span>
+                        <span class="tabletsHidden">變更</span>
+                    </button>
+                </div>
+                <div class="flex_tr">
+                    <button class="warn" onclick="setAction('messagesType_{$key}','MSGBOARD_DELETE_TYPE')">
+                        <span class="fa-solid fa-trash-can"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </div>
+            </div>
+            <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+            <input name="iv" type="hidden" value="{$SERVER_IV}" />
+            <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+            <input name="hash" type="hidden" value="{$mType.hashdata}" />
+        </form>
+        {/foreach}
+        {/if}
+        <form class="flex_tr allergic" style="text-align: center;" method="POST"
+            onsubmit="return done(this, 'refresh' , '', false);">
+            <div class="flex_td" style="flex: 3;">
+                <input name="typename" type="text" placeholder="新增分類(EX:最新消息、舊雨新知...等)"/>
+            </div>
+            <!-- <div class="flex_td" >
+            <label class="switch" style="margin: 0 auto;">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div> -->
+            <div class="flex_td">
+                <div class="flex_tr">
+                    <button>
+                        <span class="fa-solid fa-pen"></span>
+                        <span class="tabletsHidden">建立</span>
+                    </button>
+                </div>
+                <div class="flex_tr">
+                    <button disabled>
+                        <span class="fa-solid fa-trash-can"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </div>
+            </div>
+            <input name="action" type="hidden" value="MSGBOARD_ADD_TYPE" />
+        </form>
+    </div>
+</details>
+<!--公告------------------------------------------>
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    {if isset($messages)}
+    <div class="flex_th" style="text-align: center;">
+        <!-------------------------------------------->
+        {if $orderby eq "weight"}
+        <a class="flex_td tabletsHidden"
+            href='?route={$route}&orderby=weight&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>權數</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td tabletsHidden" href="?route={$route}&orderby=weight&order=desc&page={$page}&limit={$limit}"
+            target="_self">
+            <span>權數</span>
+            &nbsp;
+        </a>
+        {/if}
+        <!-------------------------------------------->
+        {if $orderby eq "title"}
+        <a class="flex_td" style="flex: 2;"
+            href='?route={$route}&orderby=title&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>標題</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td" style="flex: 2;" href="?route={$route}&orderby=title&order=asc&page={$page}&limit={$limit}"
+            target="_self">
+            <span>標題</span>
+            &nbsp;
+        </a>
+        {/if}
+        <!-------------------------------------------->
+        <a class="flex_td tabletsHidden">
+            <span>分類</span>
+            &nbsp;
+        </a>
+        <!-------------------------------------------->
+        {if $orderby eq "author"}
+        <a class="flex_td tabletsHidden"
+            href='?route={$route}&orderby=author&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>發布單位</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td tabletsHidden" href="?route={$route}&orderby=author&order=asc&page={$page}&limit={$limit}"
+            target="_self">
+            <span>發布單位</span>
+            &nbsp;
+        </a>
+        {/if}
+
+        <!-------------------------------------------->
+        <a class="flex_td">
+            <span>狀態</span>
+        </a>
+        <a class="flex_td">
+            <span>編輯</span>
+        </a>
+    </div>
+    {foreach $messages as $msg}
+    <!-- productId: {$msg.id} -->
+    <div class="allergic flex_tr" style="text-align: center;">
+        <div class="flex_td tabletsHidden">{$msg.weight}</div>
+        <div class="flex_td" style="flex: 2;">{$msg.title}</div>
+        <div class="flex_td tabletsHidden">{if empty($msg.type)}沒有分類{else}{$msg.type}{/if}</div>
+        <div class="flex_td tabletsHidden">{$msg.author}</div>
+        <form class="flex_td" method="POST" onsubmit="return false;">
+            <label class="switch" style="margin: 0 auto;">
+                <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                <input name="hash" type="hidden" value="{$msg.hashdata}" />
+                <input name="action" type="hidden" value="MSGBOARD_CHANGE_STATUS" />
+                <input type="checkbox" onchange="return done(this.form, false , '', false);" {if
+                    $msg.status}checked{/if}>
+                <span class="slider"></span>
+            </label>
+        </form>
+        <div class="flex_td">
+            <div class="flex_tr">
+                <button onclick="route('manage.msgboard&pid={$msg.id}')">
+                    <span class="fa-solid fa-pen"></span>
+                    <span class="tabletsHidden">編輯</span>
+                </button>
+            </div>
+            <div class="flex_tr">
+                <form class="flex_td" method="POST" onsubmit="return done(this, 'refresh' , '', false);">
+                    <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                    <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                    <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                    <input name="hash" type="hidden" value="{$msg.hashdata}" />
+                    <input name="action" type="hidden" value="MSGBOARD_DELETE" />
+                    <button class="warn">
+                        <span class="fa-solid fa-trash-can"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 建立時間：{$msg.created_at}<br />
+            更新時間：{$msg.updated_at} -->
+
+    {/foreach}
+    <div style="margin: 50px auto;">
+        <button onclick="route('manage.msgboard')">
+            <span class="fa-solid fa-square-plus"></span>
+            <span>新增公告</span>
+        </button>
+    </div>
+    <!--頁碼工具--------------------------------------------------------------------------------------------->
+    {if isset($lastPage)}
+    <hr />
+    <div style="margin: 0 auto;">
+        {for $p=1 to $lastPage}
+        {if $p eq $page}
+        <button disabled>
+            {$p}
+        </button>
+        {else}
+        {if ($p lt $page+3 && $p gt $page-3) || ($p eq $lastPage) || ($p eq 1)}
+        {if ($p eq $lastPage) && ($p gt $page+3)}
+        <span>......</span>
+        {/if}
+        <button onclick="route('?route={$route}&orderby={$orderby}&order={$page_order}&page={$p}&limit={$limit}')">
+            {$p}
+        </button>
+        {if $p eq 1 && ($p lt $page-3)}
+        <span>......</span>
+        {/if}
+        {/if}
+        {/if}
+        {/for}
+    </div>
+    {/if}
+    <!--頁碼工具EOF------------------------------------------------------------------------------------------>
+    {else}
+    <div class="flex_th">
+        <h1 style="text-align: center;">沒有任何公告 sad..</h1>
+    </div>
+    {/if}
+</div>

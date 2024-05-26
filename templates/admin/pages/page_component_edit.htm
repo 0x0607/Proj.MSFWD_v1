@@ -1,0 +1,30 @@
+<form method="POST" onsubmit="return done(this, 'succ' , '', true);">
+    {include file="{$dir}/table_creater.htm"}
+</form>
+<details>
+    <summary style="margin: 0 auto;width: 100%;color: gray; text-align: center;" onclick="preViewPage('{$pName}')">
+        檢視頁面效果
+    </summary>
+    <div id="pagePreView">
+        <div class="flex_table">
+            <div class="title">
+                <span class="fa-solid fa-eye"></span>
+                <span>頁面檢視</span>
+            </div>
+            <!-- <div class="flex_tr interface">
+                <div>
+                    <a class="prom">
+                        <span class="fa-solid fa-rotate-right"></span>
+                        <span>重整</span>
+                    </a>
+                </div>
+            </div> -->
+            <!-- <div class="flex_tr">
+                <span class="warn">* 注意如有異動請存檔後再重整檢視</span>
+            </div> -->
+            <div class="flex_tr" style="height: 960px; margin-top: 20px;">
+                <iframe id="pagePreViewIframe" height="100%" width="100%" style="pointer-events: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</details>

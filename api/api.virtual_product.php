@@ -22,16 +22,13 @@ if (isset($DATA['oid'])) {
             switch ($ACTION) {
                 case "UNTURNED_DELIVERY":
                     if (isset($unturnedManage, $steamauthManage)) {
-
                         $steamInformation = $steamauthManage->getMemberSteamauth($orderInformation[0]['mid']);
                         if (!empty($steamInformation)) {
                             $orderInformation[0]['items'] = $productManage->getOrderInformation($DATA['oid']);
-
                             $steamId = $steamInformation['steam_id'];
                             $productInformation = $DATA['product'];
                             $productInformation['ExpireSecond'] = 3600 + 86400 * 30 * $orderInformation[0]['items'][0]['quantity'];
-                            $unturnedManage->delivery($steamId, $productInformation);
-                            $deliveryResult = true;
+                            $deliveryResult = $unturnedManage->delivery($steamId, $productInformation);
                         }
                     }
             }

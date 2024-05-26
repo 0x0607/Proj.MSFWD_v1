@@ -1,0 +1,68 @@
+<!-- informationEdit -->
+<div>
+    <div class="informationEdit">
+        <div class="title">
+            <label class="uploadimage" for="{$user.id}">
+                <img class="uploadimage" id="avatar" src="{$user.avatar}"
+                    onerror="this.src='/assets/images/error404.png'" />
+            </label>
+            <input name="uploadfile" id="{$user.id}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                onchange="updatePreview(this,'avatar')" />
+        </div>
+        <form class="content" method="POST"
+            onsubmit="return done(this, 'refresh' , 'CHANGE_MEMEBR_INFORMATION_ERROR_MESSAGE');">
+            {****************************member-setting****************************}
+            <span>暱稱</span><br />
+            <input value="" type="text" placeholder="{$user.nickname}" name="nickname" id="nickname"
+                maxlength="18" /><br />
+            <span>帳號</span><br />
+            <input value="" type="text" placeholder="{$user.account}" name="account" id="account" minlength="3"
+                maxlength="18" pattern="[a-zA-Z0-9\._\-#@$]+" /><br />
+            <!-- <span>偏好顏色</span><br />
+            <input value="{$user.theme}" type="color" name="theme" id="theme"/><br /> -->
+            <hr />
+            <span>目前密碼</span><br />
+            <input value="" type="password" maxlength="513" placeholder="Old password" name="passwordOld"
+                maxlength="513" onfocus="clearInput(this)" oninput="sha256(this)" hash="" />
+            <br />
+            <span>新密碼</span><br />
+            <input value="" type="password" placeholder="New Password" name="password" maxlength="513"
+                onfocus="clearInput(this)" oninput="sha256(this)" hash="" /><br />
+            <!-- <span>再次輸入新密碼</span><br />
+            <input value="" type="password" maxlength="513" placeholder="Old password" name="passwordCheck"
+                maxlength="513" onfocus="clearInput(this)" oninput="sha256(this)" hash="" />
+            <br /> -->
+            <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+            <input name="iv" type="hidden" value="{$SERVER_IV}" />
+            <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+            <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+            <br />
+            <button name="action" value="USER_CHANGE_INFORMATION" type="submit">編輯</button>
+        </form>
+    </div>
+</div>
+<div class="flex_table" style="width: 75%;">
+    <div class="title">進階調整</div>
+    <div class="flex_tr" style="margin: 20px 0; text-align: center;">
+        <div class="flex_td">
+            <span>HashKey</span>
+        </div>
+        <div class="flex_td">
+            <input type="text" value="fhpGWKneKRqBXYBPCNNcNCCqGAapJ5Rx"/>
+        </div>
+    </div>
+    <div class="flex_tr" style="margin: 20px 0; text-align: center;">
+        <div class="flex_td">
+            <span>HashIv</span>
+        </div>
+        <div class="flex_td">
+            <input type="text" value="qhHGyGrECwQWpReA"/>
+        </div>
+    </div>
+    <div class="flex_tr" style="margin: 20px auto; text-align: center;">
+        <form class="content" method="POST" onsubmit="return false;" >
+            <button>取得API</button>
+        </form>
+    </div>
+</div>
+<!-- informationEdit EOF -->

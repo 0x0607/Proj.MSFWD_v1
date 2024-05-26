@@ -3,6 +3,7 @@
 	border-radius: 30px;
 	padding: 20px;
 	margin: 70px auto;
+	background-color: var(--alpha-30p);
 }
 .announcementContentText {
 	padding: 20px;
@@ -15,6 +16,6 @@
 	display: block;
 }
 .announcementContent{
-    height: 200px;
+    min-height: 200px;
 }
 

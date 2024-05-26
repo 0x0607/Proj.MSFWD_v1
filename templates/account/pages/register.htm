@@ -1,0 +1,60 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- register -->
+<article class="account">
+    <form class="content" method="POST" onsubmit="return done(this, '/account/?route=login' , 'LOGIN_ERROR_MESSAGE');">
+        <div class="icon">
+            <img src="{$icon}" />
+        </div>
+        <div class="information">
+            <div class="title">
+                <h2>REGISTER</h2>
+                <span>歡迎加入我們</span>
+                <!-- ERROR MESSAGE {* $LOGIN_ERROR_MESSAGE 為 PHP 印製之錯誤訊息，不用理它. *} -->
+            </div>
+            <div class="textbox">
+                <div class="textinput">
+                    <input value="" type="text" placeholder="Nickname" name="nickname" maxlength="18"
+                        required />
+                    <span class="fa-solid fa-user-tag inputicon"></span>
+                </div>
+                <div class="textinput">
+                    <input value="" type="text" placeholder="Account" name="account" maxlength="18"
+                        pattern="[a-zA-Z0-9\._\-#@$]+" required />
+                    <span class="fa-solid fa-id-card inputicon"></span>
+                </div>
+                <div class="textinput">
+                    <input type="password" placeholder="Password" name="password" required
+                        onfocus="clearInput(this)" oninput="sha256(this)" hash="" />
+                    <span class="fa-solid fa-key inputicon"></span>
+                </div>
+                <div class="textinput">
+                    <input type="password" placeholder="Repeat Password" name="passwordCheck"
+                        required onfocus="clearInput(this)" oninput="sha256(this)" hash="" />
+                    <span class="fa-solid fa-key inputicon"></span>
+                </div>
+                <button name="action" value="USER_REGISTER">SIGN UP!!</button>
+                <!-- <span class="gray">或</span>
+                <div class="other_login">
+                    <a class="fa-brands fa-steam" href="#"></a>
+                    <a class="fa-brands fa-discord" href="#"></a>
+                    <a class="fa-brands fa-facebook" href="#"></a>
+                    <a class="fa-brands fa-line" href="#"></a>
+                    <a class="fa-brands fa-google" href="#"></a>
+                </div> -->
+                <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+                <!-- 動作代碼 -->
+                <!-- <a id="register" href="?route=register">沒有帳號嗎? 建立一個新用戶</a> -->
+            </div>
+        </div>
+        <div class="other_link">
+            <a id="backhome" href="?route=login">BACK LOGIN</a>
+            <span class="divider">｜</span>
+            <a href="##" id="privacy_policy">隱私權守則 Privacy Policy</a>
+        </div>
+    </form>
+</article>
+<!-- register EOF-->

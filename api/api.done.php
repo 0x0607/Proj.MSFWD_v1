@@ -58,8 +58,8 @@ if ($result) {
             if (!empty($virtualProduct)) {
                 $virtualProduct["oid"] = $orderInformation[0]['order_id'];
                 // $vProduct[] = $virtualProduct;
-                $VirtualProductresult = json_decode(apiRespondJsonData(json_encode($virtualProduct), SERVER_API_URL),true);
-                $LOG_STATUS_CODE["api.done"] = $VirtualProductresult['data'];
+                $virtualProductresult = json_decode(apiRespondJsonData(json_encode($virtualProduct), SERVER_API_URL), true);
+                $LOG_STATUS_CODE["api.done"] = $virtualProductresult['data'];
                 // 如果發貨完成則將狀態設為完成
                 $productManage->setOrderStatus($data['MerchantOrderNo'], $LOG_STATUS_CODE["api.done"]);
             }

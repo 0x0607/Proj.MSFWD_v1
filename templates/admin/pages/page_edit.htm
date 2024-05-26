@@ -1,0 +1,118 @@
+<form method="POST"
+    onsubmit="return done(this, '{if isset($pid)}manage.page&pid={$pid}{else}manage.pages{/if}' , '', true);">
+    {include file="{$dir}/table_creater.htm"}
+</form>
+<!-- <details>
+    <summary style="margin: 0 auto;width: 100%;color: gray; text-align: center;">
+        查看說明
+    </summary> -->
+{if isset($pageComponentList)}
+<div id="pageComponentList" class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-table-columns"></span>
+        <!-- <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}-元件調整</span> -->
+        <span>元件調整</span>
+    </div>
+    <!-- <div id="interface" class="flex_tr interface" style="visibility: hidden;"> -->
+    <div id="interface" class="flex_tr interface">
+        <div>
+            <a class="prom" href="#pagePreView" onclick="preViewPage('{$pName}')">
+                <span class="fa-solid fa-eye"></span>
+                <span>檢視</span>
+            </a>
+        </div>
+        <div>
+            <a id="interface_succ" class="succ" onclick="savePidCache()" style="visibility: hidden;">
+                <span class="fa-solid fa-floppy-disk"></span>
+                <span>存盤</span>
+            </a>
+        </div>
+        <!-- <div>
+            <a class="warn" onclick="remPidCache()">
+                <span class="fa-solid fa-eraser"></span>
+                <span>清除緩存</span>
+            </a>
+        </div> -->
+
+    </div>
+    <div class="flex_tr">
+        <span class="warn">* 注意如有異動請存檔後再按檢視</span>
+    </div>
+    <!-- 元件調整頁窗 -->
+    <div id="pageEdit" class="flex_tr" style="align-items:flex-start;margin: 20px 0;gap: 10px;" data-pid="{$pid}">
+        {foreach $pageComponentList as $positionX => $positionXData}
+        <div class="flex_td drag_wrapper">
+            {foreach $positionXData as $positionY => $componentData}
+            <div class="drag_content" data-id="{$componentData.id}" data-cid="{$componentData.cid}" draggable="true">
+                <div style="width: 80%;">
+                    <span class="fa-solid fa-star"></span>
+                    <span>
+                        {if isset($componentData.displayname)}
+                        <span>{$componentData.displayname}</span>
+                        <span style="color: var(--accent-ft);">({$componentData.name})</span>
+                        {else}{$componentData.name}{/if}
+                    </span>
+                </div>
+                <div>
+                    <div class="flex_td" style="align-items: center;">
+                        <button class="edit" onclick="route('manage.page.component&pid={$pid}&id={$componentData.id}')">
+                            <span class="fa-solid fa-pen"></span>
+                            <span class="tabletsHidden">編輯</span>
+                        </button>
+                    </div>
+                    <form class="flex_td" method="POST" onsubmit="return done(this, 'succ' , '', false);">
+                        <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                        <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                        <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                        <input name="hash" type="hidden" value="" />
+                        <input name="action" type="hidden" value="TEST" />
+                        <button class="delete">
+                            <span class="fa-solid fa-trash-can"></span>
+                            <span class="tabletsHidden">刪除</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {/foreach}
+            <!-- 新增元件 -->
+            <div class="drag_content_add">
+                <button>
+                    <span class="fa-solid fa-square-plus"></span>
+                    <span>新增元件</span>
+                </button>
+            </div>
+            <!-- 新增元件EOF -->
+        </div>
+        {/foreach}
+    </div>
+</div>
+{/if}
+<div id="pagePreView" style="display: none;">
+    <div class="flex_table" >
+        <div class="title">
+            <span class="fa-solid fa-eye"></span>
+            <span>頁面檢視</span>
+        </div>
+        <div class="flex_tr interface">
+            <div>
+                <a class="prom" onclick="preViewPage('{$pName}')">
+                    <span class="fa-solid fa-rotate-right"></span>
+                    <span>重整</span>
+                </a>
+            </div>
+            <div>
+                <a class="prom" href="#pageComponentList">
+                    <span class="fa-solid fa-pen"></span>
+                    <span>返回編輯</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex_tr">
+            <span class="warn">* 注意如有異動請存檔後再重整檢視</span>
+        </div>
+        <div class="flex_tr" style="height: 960px; margin-top: 20px;">
+            <iframe id="pagePreViewIframe" height="100%" width="100%" style="pointer-events: none;"></iframe>
+        </div>
+    </div>
+</div>
+<!-- </details> -->

@@ -1,0 +1,22 @@
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    <div class="flex_tr">
+        <span class="warn">* 僅供root使用，此訊息是所有站台的資訊</span>
+    </div>
+    {foreach $webdata as $web}
+    <div class="flex_tr">
+        <div class="flex_td">
+            {foreach $web as $key => $data}
+            <div class="flex_tr" style="text-align: left; justify-content: left">
+                <span>{$key}: </span>
+                <code>{$data}</code>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+    <hr />
+    {/foreach}
+</div>

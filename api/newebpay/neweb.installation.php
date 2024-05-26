@@ -18,4 +18,4 @@ $newPaySetting = [
     "clientBackURL" => STORE_CLIENT_BACK_URL
 ];
 $newebPayObj = new NewebPay_MPG_API($newPaySetting);
-$newebPayObj->deBugMode(CONFIG_GENERAL['debug']);
+$newebPayObj->deBugMode(WEBSITE_DEBUG);

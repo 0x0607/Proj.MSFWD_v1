@@ -1,46 +1,46 @@
 <?php
-require_once("../sys.global.php");
-if (!isset($_SESSION['member']['mid'])) httpRespondJson(["status" => 401, "data" => "No access."]);
-if ($_SESSION['member']['mid'] != 589605057335390208) httpRespondJson(["status" => 401, "data" => "No access."]);
-$now = time();
-?>
+require '../sys.init.php';          // 頁面初始化
+require './admin.pages.php';        // 所有頁面
+/*************************************************************
+ *
+ * 管理頁面的主頁
+ * 
+ *************************************************************/
+// 載入資源
+$TEMPLATES_DIR = "../templates/";
+$TEMPLATE_DIR = "admin";
+$INCLUDE_JS[] = "/javascripts/hiddenMenu.js";
+$INCLUDE_CSS[] = "/css/admin.css";
+$BREAD_CRUMB[] = ["displayname"=>"管理","link"=>"/admin/"];
+/*************************************************************/
+// 沒有登入
+if(!isset($_SESSION['member']['mid'])) header("location: " . SERVER_URL . "/account/?route=login");
 
-<html>
+// 不具有任何權限
+if (!$MEMBER_PERMISSIONS) header("location: " . SERVER_URL . "/account/");
+//if (!$MEMBER_PERMISSIONS) httpRespondJson(["status" => 401, "data" => "No access."]);
 
-<head>
-    <title>簡易快速架站工具</title>
-</head>
-
-<body>
-    <!-- <p>現在時間為<time><?php echo date("Y-m-d H:i:s", $now); ?></time></p> -->
-    <p>Timestamp：<code><?php echo $now; ?></code></p>
-    <p>C#Tick：<code><?php echo number_format(convertTimestampToCSharpTick($now), 0, '', ''); ?></code></p>
-
-    <form>
-    </form>
-    <div style="margin: 0 auto;width: 87%">
-        <h1 style="margin: 80px auto 0 auto;">網站列表</h1>
-        <table style="background-color: rgba(0,0,0,.45); color:white; border-radius: 20px; width: 100%; padding: 20px 10px; margin: 0px auto;">
-            <tr>
-                <td style="text-align: center;">icon</td>
-                <td>id</td>
-                <td>domain name</td>
-                <td>status</td>
-            </tr>
-            <?php
-            echo "<!--Hello world-->";
-            $website = $websiteManage->getAllWebsite();
-            foreach ($website as $w) {
-                echo "<tr>";
-                echo "<td style='text-align: center;'><img src='{$w['icon']}' style='width:64px;' onerror=\"this.src='../assets/images/error404.png'\"></img></td>";
-                echo "<td>{$w['id']}</td>";
-                echo "<td><a style='color:white;' href='http://{$w['domain']}' target='_blank'>{$w['domain']}</a></td>";
-                echo "<td>" . ($w['status'] ? "<span style='background-color:green;'>ENABLE</span>" : "<span style='background-color:red;'>DISABLE</span>") . "</td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
-    </div>
-
-
-</body>
+// 錯誤的動作請求
+if (!isset($PAGES[$PAGE])) httpRespondJson(["status" => 400, "data" => "Invalid page."]);
+// 沒有存取權限
+if ($PAGES[$PAGE]['permission']) {
+    // if (!(($PAGES[$PAGE]['permission'] & $MEMBER_PERMISSIONS) || $MEMBER_PERMISSIONS & 1)) httpRespondJson(["status" => 401, "data" => "Invalid access."]);
+    if (!(($PAGES[$PAGE]['permission'] & $MEMBER_PERMISSIONS) || $MEMBER_PERMISSIONS & 1)) header("location: ".SERVER_URL."/admin/");
+    else $BREAD_CRUMB[] = ["displayname"=>$PAGES[$PAGE]['displayname'],"link"=>"/admin/?route={$PAGE}"];
+}
+/*************************************************************/
+// 網站使用物件
+// 將頁面資訊寫進smartyAssign
+$smarty->assign("page_information", $PAGES[$PAGE]);
+// 引入相關PHP
+include_once "./php/{$PAGES[$PAGE]['filename']}.php";
+include_once "./navbar.php";
+/************************************************************/
+// 引入JS及網站名稱與簡介
+$PAGE_NAME = WEBSITE['displayname']."｜".$PAGES[$PAGE]['displayname'];
+$PAGE_DESC = "管理者専用ページ.";
+/************************************************************/
+// 開始運作
+require '../sys.base.php';
+// $now = time();
+// number_format(convertTimestampToCSharpTick($now), 0, '', '');

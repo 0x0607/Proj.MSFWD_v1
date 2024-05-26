@@ -1,0 +1,35 @@
+<nav class="top">
+    <div class="content">
+        <a class="icon" href="#route" onclick="route('/admin/')">
+            <img src="{$icon}">
+            <h2>{$siteName}</h2>
+        </a>
+        <div class="system_buttons">
+            <button id="backhome" title="backhome" onclick="route('/')">
+                <span class="buttonicon fa-solid fa-eye"></span>
+                <span class="word">檢視網站</span>
+            </button>
+            <button id="logout" title="logout" onclick="route('/account/?route=logout')">
+                <span class="buttonicon fa-solid fa-door-open"></span>
+                <span class="word">登出</span>
+            </button>
+        </div>
+    </div>
+    <div class="breadcrumb">
+        {if isset($breadcrumb)}
+        {foreach $breadcrumb as $crumb}
+        <a href="{$crumb.link}">{$crumb.displayname}</a><span>/</span>
+        {/foreach}
+        {else}
+        <a href="#">未知</a><span>/</span>
+        {/if}
+    </div>
+</nav>
+<div style="min-height: 100vh;display: flex;width: 100%;">
+    <!-------------------------------->
+
+    {if isset($webnav)}{include file="nav/nav.admin.htm"}{/if}
+    <div id="setting">
+        {include file="{$dir}/pages/{$page_information.filename}.htm"}
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<div class="flex_table">
+    {* ---------------------------------------- 輸出表格 ---------------------------------------- *}
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    {foreach $formInput as $class => $options}
+    <div class="flex_th">
+        <h4>{$class}</h4>
+    </div>
+    {foreach $options as $setting}
+    {foreach $setting as $line => $input}
+    {if $input@first}
+    <div class="flex_tr">
+        {/if}
+        {for $loop_num=0 to ($input.loop|default:1)-1}
+        <!-- {$input.label} -->
+        {* ---------------------------------------- 圖片功能 ---------------------------------------- *}
+        {if $input.type eq "image"}
+        <div class="image_container" style="margin: 0 auto;">
+            <label for="input_{$line}{$loop_num}">
+                <span style="color: gray;">{$input.label}{if isset($input.loop)}{$loop_num+1}{/if}</span>
+                <br />
+                <img class="uploadimage" id="image_{$line}{$loop_num}"
+                    onerror="this.src='/assets/images/no_picture.png'"
+                    src="{if isset($input.loop)}{$input.value[$loop_num]}{else}{$input.value}{/if}" />
+            </label>
+            <input name="{$line}{if isset($input.loop)}[{$loop_num}]{/if}" id="input_{$line}{$loop_num}" type="file"
+                style="display: none;" accept=".png,.jpg,.jpeg"
+                onchange="updatePreview(this,'image_{$line}{$loop_num}')" />
+            <input name="delete_{$line}{if isset($input.loop)}[{$loop_num}]{/if}"
+                id="delete_{$line}{if isset($input.loop)}[{$loop_num}]{/if}" style="display: none;" type="checkbox"
+                readonly>
+            <br />
+            {if !$input.required}
+            <a class="warn"
+                onclick="clearFileInput('input_{$line}{$loop_num}','image_{$line}{$loop_num}');return false;"
+                href="javascript:void(0);">刪除圖片</a>
+            <!-- <button class="warn"
+            onclick="clearFileInput('input_{$line}{$loop_num}','image_{$line}{$loop_num}');return false;"
+            href="javascript:void(0);">刪除圖片</button> -->
+            {/if}
+        </div>
+        {else}
+        <div class="flex_td">
+            {if $input.type neq "hidden"}
+            <span>{$input.label}{if isset($input.loop)}{$loop_num+1}{/if}</span>
+            {if $input.required}<span class="warn" title="必填">*</span>{/if}
+            <br />
+            {/if}
+            {* ---------------------------------------- 文字功能 ---------------------------------------- *}
+            {if $input.type eq "textarea"}
+            <textarea name="{$line}" placeholder="{$input.label}" {if $input.readonly}readonly{else}{if
+                $input.required}required{/if}{/if}>{$input.value}</textarea>
+
+            {* ---------------------------------------- 選項功能 ---------------------------------------- *}
+            {elseif $input.type eq "select"}
+            <select name="{$line}" {if $input.required}required{/if} {if $input.readonly}disabled{/if}>
+                {if isset($input.placeholder)}<option value="" disabled selected hidden>{$input.placeholder}</option>
+                {/if}
+                {foreach $input.value as $opt => $val}
+                <option value="{$val}">{$opt}</option>
+                {/foreach}
+            </select>
+
+            {* ---------------------------------------- 選項功能 ---------------------------------------- *}
+            {elseif $input.type eq "radio" || $input.type eq "checkbox"}
+            {foreach $input.value as $opt => $val}
+            <input name="{$line}" type="{$input.type}" value="{$val}" {if $input.required && $opt@first}required{/if}>
+            {$opt}<br />
+            {/foreach}
+
+            {* ---------------------------------------- 切換器 ---------------------------------------- *}
+            {elseif $input.type eq "switch"}
+            <span style="color: gray;">{$input.placeholder}</span>
+            <label class="switch">
+                <input name="{$line}{if isset($input.loop)}[{$loop_num}]{/if}" type="checkbox" {if $input.value}checked{/if} {if $input.required &&
+                    $opt@first}required{/if} {if $input.readonly}disabled{/if}>
+                <span class="slider"></span>
+            </label>
+
+            {* ---------------------------------------- 顏色功能 ---------------------------------------- *}
+            {elseif $input.type eq "color"}
+            <input name="{$line}" type="{$input.type}" value="{$input.value}" {if $input.required}required{/if} {if
+                $input.readonly}readonly{/if} />
+            <!-- <span style="color: #7F7F7F;">{$input.placeholder}</span> -->
+
+            {* ---------------------------------------- 隱藏功能 ---------------------------------------- *}
+            {elseif $input.type eq "hidden"}
+            <input id="{$line}{if isset($input.loop)}[{$loop_num}]{/if}"
+                name="{$line}{if isset($input.loop)}[{$loop_num}]{/if}" type="{$input.type}" value="{$input.value}" {if
+                $input.readonly}readonly{/if} />
+
+            {* ---------------------------------------- 一般功能 ---------------------------------------- *}
+            {else}
+            <input name="{$line}" type="{$input.type}" value="{$input.value}" placeholder="{$input.placeholder}" {if
+                $input.required}required{/if} {if $input.readonly}readonly{/if} />
+
+            {/if}
+        </div>
+        {/if}
+        {/for}
+
+        {if $input@last}
+    </div>
+    {/if}
+    {/foreach}
+    {/foreach}
+    <hr />
+    {/foreach}
+
+    <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+    <input name="iv" type="hidden" value="{$SERVER_IV}" />
+    <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+    <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+    <!-- 動作代碼 -->
+    <div class="flex_tr" style="text-align: center; align-items: center;">
+        {if isset($submit_action)}
+        <button class="submit" name="action" value="{$submit_action}">
+            <span class="fa-solid fa-check"></span>
+            <span>Submit</span>
+        </button>
+        {else}
+        <input class="submit" name="submit" value="submit" type="button" />
+        {/if}
+    </div>
+    {* ---------------------------------------- 輸出表格EOF ---------------------------------------- *}
+</div>

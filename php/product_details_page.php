@@ -7,9 +7,9 @@ $LOG_REASON["product_details_page"] = "";
  * 
  ****************************************************************************************/
 // 引入的CSS及JS
-$includeCss[] = "./css/product_details_page.css";
-$includeJs[] = "./javascripts/updateProducts.js";
-$includeJs[] = "./javascripts/uploadImage.js";
+$INCLUDE_CSS[] = "./css/product_details_page.css";
+$INCLUDE_JS[] = "./javascripts/updateProducts.js";
+$INCLUDE_JS[] = "./javascripts/uploadImage.js";
 /****************************************************************************************/
 // 沒有登入
 if (!isset($_GET['pid'])) {
@@ -17,6 +17,6 @@ if (!isset($_GET['pid'])) {
     exit;
 }
 $pid = intval($_GET['pid']);
-$product = $productManage->getProductInformation(WEBSITE_ID, $pid);
+$product = $productManage->getProductInformation($pid);
 $smarty->assign("product", $product);
 /****************************************************************************************/

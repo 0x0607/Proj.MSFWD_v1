@@ -1,0 +1,26 @@
+<Files "config.ini">
+    RewriteEngine On
+    RewriteRule ^ /404 [L,R=404]
+</Files>
+<Files "config.json">
+    RewriteEngine On
+    RewriteRule ^ /404 [L,R=404]
+</Files>
+<FilesMatch "\.(ini|json|txt|log|sh|bat)$">
+    RewriteEngine On
+    RewriteRule ^ /404 [L,R=404]
+</FilesMatch>
+Options -Indexes
+ErrorDocument 400 /.errors/
+ErrorDocument 401 /.errors/
+ErrorDocument 403 /.errors/
+ErrorDocument 404 /.errors/
+ErrorDocument 405 /.errors/
+ErrorDocument 408 /.errors/
+ErrorDocument 429 /.errors/501.htm
+ErrorDocument 500 /.errors/501.htm
+ErrorDocument 501 /.errors/501.htm
+ErrorDocument 502 /.errors/501.htm
+ErrorDocument 503 /.errors/501.htm
+ErrorDocument 504 /.errors/501.htm
+ErrorDocument 505 /.errors/501.htm

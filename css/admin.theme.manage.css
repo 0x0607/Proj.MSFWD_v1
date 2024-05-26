@@ -1,0 +1,103 @@
+#demoPreview {
+    width: 746px;
+    height: 420px;
+}
+#demoPreview .browserTitle,
+#demoPreview #browserContent,
+#demoPreview .browserSearch,
+#demoPreview #promptboxNav{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#demoPreview .browserTitle {
+    background-color: #DEDEDE;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+}
+
+#demoPreview .browserSearch{
+    background-color: #F7F7F7;
+    height: 5px;
+}
+
+#demoPreview .browserTitle > .title {
+    color: #131313;
+    border-radius: 5px 5px 0 0;
+    background-color: #F7F7F7;
+    margin-top: 5px;
+    margin-left: 10px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+#demoPreview .browserTitle>.red,
+#demoPreview .browserTitle>.yellow,
+#demoPreview .browserTitle>.green {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin: 0 2px;
+}
+
+#demoPreview .browserTitle>.red {
+    background-color: #FF6363;
+
+}
+
+#demoPreview .browserTitle>.yellow {
+    background-color: #FEC142;
+}
+
+#demoPreview .browserTitle>.green {
+    background-color: #33CD4B;
+}
+
+#demoPreview #promptboxNav{
+    text-align: left;
+    padding: 0 10px;
+}
+
+#demoPreview #browserContent {
+    border-radius: 0 0 10px 10px;
+    padding: 20px 20%;
+    text-align: center;
+    box-shadow: 8px 10px 8px 1px #000000;
+}
+
+#demoPreview #browserContent>#promptboxTitle {
+    border-radius: 10px 10px 0 0;
+    margin: 0 auto;
+}
+
+#demoPreview #browserContent #promptboxContent {
+    
+    backdrop-filter: blur(16px) saturate(120%);
+    border-radius: 0 0 10px 10px;
+    height: 240px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#demoPreview #promptboxContent #promptboxContentText,
+#demoPreview #promptboxContent #promptboxAccentContentText {
+    padding: 20px 0;
+    font-size: 20px;
+}
+
+#demoPreview #promptboxContent #promptboxContentButton,
+#demoPreview #promptboxContent #promptboxContentButtonHover,
+#demoPreview #promptboxContent #promptboxContentAccentButton,
+#demoPreview #promptboxContent #promptboxContentAccentButtonHover {
+    width: auto;
+}
+
+#demoPreview #promptboxContent #promptboxHyperlink,
+#demoPreview #promptboxContent #promptboxHyperlinkHover{
+    text-decoration: none;
+}

@@ -1,0 +1,74 @@
+<form method="POST"
+    onsubmit="return done(this, '{if isset($rid)}manage.role&rid={$rid}{else}manage.roles{/if}' , '', true);">
+    {include file="{$dir}/table_creater.htm"}
+</form>
+{if isset($rid)}
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>會員調整</span>
+    </div>
+    <div class="flex_th">
+        <div class="flex_td" style="flex: 3;">
+            <span>用戶資訊</span>
+        </div>
+        <div class="flex_td">
+            <span>操作</span>
+        </div>
+    </div>
+    {if isset($roleMembersList)}
+    {foreach $roleMembersList as $rMember}
+    <div class="flex_tr allergic">
+        <div class="flex_td flex_tr" style="flex: 3;">
+            <div class="mobileHidden" style="margin-right: 10px;">
+                <img src="{if isset($rMember.avatar)}{$rMember.avatar}{/if}"
+                    onerror="this.src='/assets/images/error404.png'" alt="{$rMember.account}'s images"
+                    style="background-color: #7A7A7A11;" />
+            </div>
+            <div class="flex_td">
+                {$rMember.nickname} ({$rMember.account})
+            </div>
+        </div>
+        <form class="flex_td" method="POST" onsubmit="return done(this, 'refresh' , '', false);">
+            <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+            <input name="mid" type="hidden" value="{$rMember.mid}" />
+            <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+            <input name="iv" type="hidden" value="{$SERVER_IV}" />
+            <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+            <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+            <input name="action" type="hidden" value="MEMBER_REMOVE_GROUP" />
+            <div class="flex_tr">
+                <button class="warn">
+                    <span class="fa-solid fa-user-minus"></span>
+                    <span class="tabletsHidden">移除</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    {/foreach}
+    {/if}
+    <form class="flex_tr allergic" method="POST" onsubmit="return done(this, 'refresh' , '', false);">
+        <div class="flex_td" style="flex: 3;">
+            <input id="searchUser" name="addAccount" type="text" placeholder="請輸入帳戶" style="width: 80%;"
+                oninput="searchDBUser(this.value)" value="" />
+        </div>
+        <div class="flex_td">
+            <div class="flex_tr">
+                <button>
+                    <span class="fa-solid fa-user-plus"></span>
+                    <span class="tabletsHidden">新增</span>
+                </button>
+            </div>
+        </div>
+        <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+        <input name="iv" type="hidden" value="{$SERVER_IV}" />
+        <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+        <input name="hash" type="hidden" value="{$SERVER_SEND_HASH_DATA}" />
+        <input name="action" type="hidden" value="MEMBER_ADD_GROUP" />
+    </form>
+    <div class="flex_tr">
+        <div id="searchResult" class="flex_td">
+        </div>
+    </div>
+</div>
+{/if}

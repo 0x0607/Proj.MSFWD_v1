@@ -1,0 +1,44 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- profileCard -->
+<!-- mid: {if isset($user.id)}{$user.id}{/if}-->
+{if isset($user.attendance)}{if $user.attendance}
+<script>
+    window.onload = function () {
+        notify('歡迎回來!! 目前連續簽到 {$user.attendance.nonstop_day} 天，簽到天數 {$user.attendance.day} 天。', 'succ', 3);
+    }
+</script>
+{/if}{/if}
+<div class="profileCard">
+    <img src="{if isset($user.avatar)}{$user.avatar}{else}/assets/images/quaso.png{/if}"
+        onerror="this.src='/assets/images/error404.png'" {if isset($user.theme)}style="background-color: {$user.theme};"
+        {/if} />
+    <!-- <button onclick="route('測試')"> -->
+    <div>
+        {if isset($user.nickname)}
+        <span class="displayname">{$user.nickname}</span>
+        {/if}
+        {if isset($user.account)}
+        <span class="account" onclick="return copyContent('{$serverUrl}/account/?account={$user.account}')">
+            @{$user.account}
+        </span>
+        {/if}
+        {if isset($user.roles)}
+        {foreach $user.roles as $role}
+        {*if $role@iteration lte 2*}
+        <div class="tag" {if isset($user.theme)}style="background-color: {$user.theme};" {/if}>
+            <span class="fa-solid fa-user-group"></span>
+            <span>{$role}</span>
+        </div>
+        {*/if*}
+        {/foreach}
+        <!-- <details>
+            <summary>more</summary>
+        </details> -->
+        {/if}
+        <div class="description" {if isset($user.theme)}style="border-color:{$user.theme};" {/if}>
+            {if isset($user.introduction)}{$user.introduction}{/if}
+        </div>
+        <code style="display: none;">{$user.mid}</code>
+    </div>
+</div>

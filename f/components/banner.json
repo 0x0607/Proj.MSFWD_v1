@@ -1,0 +1,44 @@
+{
+    "1.0": {
+        "image": {
+            "multiplier": 2,
+            "value": {
+                "src": {
+                    "type": "image",
+                    "displayname": "顯示圖片",
+                    "default": "/assets/images/webdesign.svg"
+                },
+                "size": {
+                    "type": "image",
+                    "displayname": "圖片大小",
+                    "default": "80%"
+                }
+            }
+        },
+        "message": {
+            "multiplier": 1,
+            "value": {
+                "message": {
+                    "type": "textarea",
+                    "displayname": "顯示文本",
+                    "default": "/assets/images/webdesign.svg"
+                }
+            }
+        },
+        "button": {
+            "multiplier": 1,
+            "value": {
+                "btn_msg": {
+                    "type": "text",
+                    "displayname": "按鈕顯示文本",
+                    "default": "see more>>"
+                },
+                "btn_link": {
+                    "type": "text",
+                    "displayname": "按鈕超連結位址",
+                    "default": "?route=home"
+                }
+            }
+        }
+    }
+}

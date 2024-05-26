@@ -1,0 +1,3 @@
+<form method="POST" onsubmit="return done(this, '{if isset($pid)}manage.product&pid={$pid}{else}manage.products{/if}' , 'ERROR_MESSAGE', true);">
+    {include file="{$dir}/table_creater.htm"}
+</form>

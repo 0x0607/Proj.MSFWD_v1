@@ -4,27 +4,39 @@
  * By Yin, MaizuRoad
  * 
  *************************************************************/
-/* 字體 */
-/************************************************************/
+/************************************************************
+ * 圖標資源
+ * https://fontawesome.com/search?o=r&m=free
+ ***********************************************************/
+/* Font Awesome 6 Free */
 @font-face {
-    font-family: "JhengHei";
-    src: url("./font/JhengHei.ttf");
-}
-
-/* @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css); */
-/* @font-face {
     font-family: "Font Awesome 6 Free";
     font-style: normal;
-    font-weight: 900;
+    font-weight: 400;
     font-display: block;
-    src: url(./font/fa-solid-900.ttf);
-} */
+    src: url(/css/font/fa-solid-900.ttf);
+}
+
+/* Font Awesome 6 Brands */
+@font-face {
+    font-family: "Font Awesome 6 Brands";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(/css/font/fa-brands-400.ttf);
+}
+
+
 /* @import url(font-awesome.min.css); */
-/************************************************************/
-/* 禁用所有元素文字選取 */
+/* @import url(fontawesome.brands.min.css); */
+
+/************************************************************
+ * 全元素設置
+ ***********************************************************/
 * {
     /* font-family: "cwTeXYen", "sans-serif", "JhengHei", "微軟正黑體 Light", "黑體-繁"; */
-    font-family: "JhengHei", "微軟正黑體 Light", "黑體-繁";
+    /* font-family: "微軟正黑體 Light", "JhengHei", "黑體-繁"; */
+    font-family: "Helvetica", "Arial", "LiHei Pro", "黑體-繁", "微軟正黑體", "微軟雅黑體", sans-serif;
     vertical-align: baseline;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -35,14 +47,710 @@
     box-sizing: border-box;
 }
 
-code {
+/************************************************************
+ * 底色設置
+ ***********************************************************/
+body {
+    color: var(--primary-ft);
+    background-color: var(--sunbaby-bg);
+}
+
+/************************************************************
+ * 介面布局設置
+ ***********************************************************/
+article.main#webMain {
+    max-width: 100%;
+    display: grid;
+}
+
+/************************************************************
+ * border-radius 圓角
+ ***********************************************************/
+/* 圓角 */
+img,
+iframe,
+.flex_table {
+    border-radius: 20px;
+}
+
+.flex_table>.title {
+    border-radius: 20px 20px 0 0;
+}
+
+/* 圓角2 */
+summary+.details,
+#notification,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type='text'],
+input[type='number'],
+input[type='password'],
+input[type="search"],
+textarea,
+select,
+button:not(.material-icons){
+    border-radius: 8px;
+}
+
+/* select:focus,
+select option:first-child{
+    border-radius: 8px 8px 0 0;
+}
+
+select option:last-child {
+    border-radius: 0 0 8px 8px;
+} */
+
+/* 圓角3 */
+.switch>.slider{
+    border-radius: 12px;
+}
+
+/* 圓形 */
+.flex_table>.title img,
+.switch>.slider:before {
+    border-radius: 50%;
+}
+
+/************************************************************
+ * transition 漸變
+ ***********************************************************/
+a,
+code,
+.switch>.slider,
+input[type="checkbox"],
+input[type="color"],
+input[type="radio"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+input[type="password"],
+input[type="search"],
+textarea,
+button,
+summary,
+summary+.details,
+.warn,
+.prom,
+.succ,
+.flex_table .flex_tr.allergic {
+    transition: background-color .3s ease-in-out, color .3s ease-in-out, border .3s ease-in-out;
+}
+
+/* select{
+    transition: border-radius .3s ease-in-out;
+} */
+/************************************************************
+ * 背景配置 
+ ***********************************************************/
+body {
+    /* font-family: Arial, sans-serif; */
+    margin: 0;
+    padding: 0;
+    /* overflow: scroll; */
+    scrollbar-width: none;
+}
+
+/************************************************************
+ * 底部配置
+ ***********************************************************/
+footer {
+    text-align: center;
+}
+
+/************************************************************
+ * 分隔線
+ ***********************************************************/
+hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--alpha-20p);
+}
+
+/************************************************************
+ * 摘要
+ ***********************************************************/
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/************************************************************
+ * 框架
+ ***********************************************************/
+iframe{
+    border: 0; 
+    background: var(--alpha-50p);
+}
+/************************************************************
+ * 輸入相關配置
+ ***********************************************************/
+/* 取消選取框線 */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+select>option {
+    outline: none;
+    box-shadow: none;
+}
+
+/* 可點擊元素游標 */
+label.uploadimage,
+img.uploadimage,
+input[type="checkbox"],
+input[type="color"],
+input[type="radio"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    cursor: pointer;
+}
+
+
+/* 按鈕預設框線 */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+summary {
+    border: none;
+    font-weight: 400;
+    /* line-height: 1; */
+}
+
+/* 按鈕預設形狀、顏色 */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button:not(.material-icons) {
+    font-size: 12pt;
+    padding: 0 14px;
+    height: 32px;
+    /* background: linear-gradient(to right, var(--primary-btn-bg) 0%, var(--accent-btn-ft) 100%); */
+    background: var(--primary-btn-bg);
+    color: var(--primary-btn-ft);
+    width: max-content;
+}
+
+/* 按鈕預設選取顏色 */
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:not(.material-icons):hover {
+    background: var(--primary-btn-hover-bg);
+    color: var(--primary-btn-hover-ft);
+}
+
+/* 按鈕禁用顏色 */
+button:disabled,
+button:disabled:hover {
+    background-color: gray;
+    color: lightgray;
+    cursor: not-allowed;
+}
+
+/* 按鈕material-icons預設形狀 */
+button.material-icons {
+    padding: 0;
+    font-size: 20pt;
+}
+
+/* 按鈕底下的material-icons文字預設 */
+button>.material-icons {
+    font-size: 10px;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+/* 禁用輸入框數字旁邊可調按鈕 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+/* 輸入框預設形狀及顏色 */
+input[type='text'],
+input[type='number'],
+input[type='password'],
+input[type="search"],
+textarea,
+select {
+    border: 0 solid transparent;
+    padding: 2px 8px;
+    resize: none;
+    width: max-content;
+    /* background-color: var(--input-bg);
+    color: var(--input-ft); */
+}
+
+/* 輸入框預設聚焦顏色 */
+input[type='text']:focus,
+input[type='number']:focus,
+input[type='password']:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    /* background-color: var(--input-focus-bg); */
+    color: black;
+    color: var(--accent-ft);
+    font-weight: 500;
+}
+
+/************************************************************
+ * 超連結與複製框
+ ***********************************************************/
+/* 取消下底線及配置顏色 */
+a,
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 常規超連結 */
+a {
+    color: var(--link-ft);
+}
+
+a:hover {
+    color: var(--link-hover-ft);
+}
+
+/* code固定可選及配置顏色 */
+code,
+pre {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+    color: var(--code-ft);
+    cursor: text;
 }
 
+code:hover,
+pre:hover {
+    color: var(--code-hover-ft);
+}
 
+/************************************************************
+ * 可上傳圖片 
+ *
+<label for="image_input">
+    <img id="image_img" class="uploadimage" src="" />
+</label>
+<input name="uploadimage" id="image_input" type="file" style="display: none;" accept=".png,.jpg,.jpeg" onchange="updatePreview(this,'image_img')" />
+ ***********************************************************/
+img.uploadimage {
+    transition: filter .4s ease-in-out;
+}
+
+label.uploadimage:hover>img.uploadimage {
+    filter: blur(4px) brightness(80%);
+}
+
+/* img.uploadimage:hover {
+    filter: blur(4px) brightness(80%);
+} */
+/************************************************************
+ * 切換器按鈕
+ *
+<label class="switch">
+    <input name="name" type="checkbox">
+    <span class="slider"></span>
+</label>
+ ***********************************************************/
+.switch,
+.switch>.slider {
+    height: 26px;
+    width: 52px;
+}
+
+.switch {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.switch>input[type="checkbox"],
+.switch>.slider:before {
+    position: absolute;
+}
+
+.switch>input[type="checkbox"] {
+    display: none;
+}
+
+.switch>.slider {
+    background-color: var(--switch-slider-bg);
+    position: relative;
+}
+
+.switch>.slider:hover {
+    background-color: var(--switch-slider-hover-bg);
+}
+
+.switch>.slider:before {
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 2px;
+    transition: transform 0.2s ease;
+    background-color: var(--switch-slider);
+}
+
+.switch>input[type='checkbox']:checked+.slider {
+    background-color: var(--switch-slider-checked-bg);
+}
+
+.switch>input[type='checkbox']:checked+.slider:hover {
+    background-color: var(--switch-slider-checked-hover-bg);
+}
+
+.switch>input[type="checkbox"]:checked+.slider:before {
+    transform: translateX(22px);
+}
+
+.switch>input[type="checkbox"]:disabled+.slider,
+.switch>input[type="checkbox"]:disabled+.slider:hover{
+    background-color: gray;
+    cursor: not-allowed;
+}
+/************************************************************
+ * 詳細資訊
+ ***********************************************************/
+summary+.details {
+    background-color: var(--alpha-30p);
+    border-radius: 20px;
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+/* details[open]>summary+.details, */
+summary+.details:hover {
+    background-color: var(--alpha-50p);
+}
+
+/************************************************************
+ * 表格工具
+ ***********************************************************/
+.flex_table,
+.flex_table .flex_th,
+.flex_table .flex_tr {
+    display: flex;
+}
+
+.flex_table {
+    flex-direction: column;
+    width: 100%;
+    margin: 50px auto;
+    padding-bottom: 20px;
+    background-color: var(--alpha-30p);
+}
+
+.flex_table>.title {
+    padding: 10px 20px;
+    text-align: left;
+    font-weight: 700;
+    width: 100%;
+    margin: 0 auto;
+    background: var(--primary-bg-alpha50p);
+    font-size: 20px;
+}
+
+.flex_table .flex_th,
+.flex_table .flex_tr {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex_table>.flex_th {
+    text-align: center;
+    margin: 10px 0;
+    padding: 0 20px;
+}
+
+.flex_table>details,
+.flex_table>.flex_tr {
+    padding: 0 20px;
+    margin: 5px 0;
+}
+
+.flex_table .flex_tr>.image_container {
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+
+.flex_table .flex_tr img {
+    height: 64px;
+    max-width: 64px;
+    object-fit: cover;
+}
+
+.flex_table .flex_td {
+    flex: 1;
+}
+
+.flex_table .flex_td>.flex_tr {
+    margin: 5px auto;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.flex_table .flex_td input[type='text'],
+.flex_table .flex_td input[type='number'],
+.flex_table .flex_td input[type='password'],
+.flex_table .flex_td textarea {
+    width: 90%;
+}
+
+.flex_table .flex_td textarea {
+    height: 100px;
+}
+
+.flex_table .flex_tr>.submit {
+    padding: 0 20px;
+    margin: 20px auto;
+}
+
+.flex_table .flex_tr.allergic{
+    background-color: var(--alpha-30p);
+    border-left: 6px solid transparent;
+    border-left: 6px solid var(--alpha-50p)
+}
+
+.flex_table .flex_tr.allergic:hover{
+    background-color: var(--alpha-70p);
+    border-left: 6px solid var(--primary-bg);
+}
+
+/************************************************************
+ * 系統資訊
+ ***********************************************************/
+/* 提示按鈕顯示 */
+button.warn,
+button.prom,
+button.succ,
+button.warn:hover,
+button.prom:hover,
+button.succ:hover {
+    color: #FFF;
+}
+
+button.warn {
+    background: var(--warn);
+}
+
+button.prom {
+    background: var(--prom);
+}
+
+button.succ {
+    background: var(--succ);
+}
+
+a.warn {
+    color: var(--warn) !important;
+}
+
+a.prom {
+    color: var(--prom) !important;
+}
+
+a.succ {
+    color: var(--succ) !important;
+}
+
+button.warn:hover {
+    background: var(--warn-hover);
+}
+
+button.prom:hover {
+    background: var(--prom-hover);
+}
+
+button.succ:hover {
+    background: var(--succ-hover);
+}
+
+a.warn:hover {
+    color: var(--warn-hover) !important;
+}
+
+a.prom:hover {
+    color: var(--prom-hover) !important;
+}
+
+a.succ:hover {
+    color: var(--succ-hover) !important;
+}
+
+/* 提示文字顯示 */
+span.warn,
+a.warn,
+span.prom,
+a.prom,
+span.succ,
+a.succ,
+span.warn:hover,
+a.warn:hover,
+span:hover.prom:hover,
+a.prom:hover,
+span.succ:hover,
+a.succ:hover {
+    background: transparent;
+}
+
+span.warn,
+a.warn {
+    color: var(--warn);
+}
+
+span.prom,
+a.prom {
+    color: var(--prom);
+}
+
+span.succ,
+a.succ {
+    color: var(--succ);
+}
+
+span.warn:hover,
+a.warn:hover {
+    color: var(--warn-hover);
+}
+
+span.prom:hover,
+a.prom:hover {
+    color: var(--prom-hover);
+}
+
+span.succ:hover,
+a.succ:hover {
+    color: var(--succ-hover);
+}
+
+/************************************************************
+ * 系統資訊 - 通知列
+ ***********************************************************/
+#notification {
+    z-index: 998;
+    position: fixed;
+    width: max-content;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    color: #FFFFFF;
+    /* background-color: var(--succ); */
+    box-shadow: 0px 3px 2px var(--shadow);
+    transform: translateY(20px);
+    transition: bottom .5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    /* animation: notification_visible 3s linear; */
+}
+
+#notification:hover,
+#notification:hover #notification_bar {
+    animation-play-state: paused;
+}
+
+#notification #notification_icon {
+    margin-right: 5px
+}
+
+#notification .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 10px;
+    font-weight: 700;
+}
+
+#notification>#notification_bar {
+    position: absolute;
+    left: 0;
+    bottom: 12px;
+    width: 100%;
+    height: 2px;
+    margin: 0 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: inherit;
+}
+
+@keyframes notifi_bar {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes notification_visible {
+    3% {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    95% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/************************************************************
+ * RWD 響應式模板
+ ***********************************************************/
+.hidden {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    color: transparent;
+    background: transparent;
+}
+
+/* @media (max-width: 1024px) {
+    article.main#webMain{
+        display: block;
+    }
+} */
+/* Tablets */
+@media (max-width: 768px) {
+
+    #notification {
+        bottom: 110px;
+    }
+
+    .tabletsHidden {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 481px) {
+    #notification {
+        bottom: 50%;
+    }
+
+    .mobileHidden {
+        display: none;
+    }
+}
+
+/************************************************************
+ * 廢棄區
+ ***********************************************************/
 /* input[type="text"], input[type="password"], input[type="submit"], textarea{
       border-radius: 5px;
       font-size: 16px;
@@ -59,133 +767,21 @@ code {
       transition: all .2s;
   } */
 
+
+/* 字體 */
 /************************************************************/
-code,
-button,
-.searchBar * {
-    transition: 0.3s ease;
-}
+/*@font-face {
+    font-family: "JhengHei";
+    src: url("./font/JhengHei.ttf");
+}*/
 
-a:hover {
-    text-decoration: none;
-}
-
-body {
-    /* font-family: Arial, sans-serif; */
-    margin: 0;
-    padding: 0;
-    /* overflow: scroll; */
-    scrollbar-width: none;
-}
-
-button {
-    cursor: pointer;
-    border: none;
-    border-radius: 30px;
+/* @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css); */
+/* @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
     font-weight: 900;
-    line-height: 1;
-}
-
-button:not(.material-icons) {
-    padding: 12px 20px;
-    font-size: 10pt;
-}
-
-button.material-icons {
-    padding: 12px 0px;
-    font-size: 24pt;
-}
-
-button {
-    cursor: pointer;
-}
-
-span.material-icons {
-    font-size: 14px;
-    line-height: normal;
-    vertical-align: middle;
-}
-
-form input {
-    outline: none;
-    border: 2px solid transparent;
-}
-
-form input[type="submit"] {
-    cursor: pointer;
-}
-
-footer {
-    text-align: center;
-}
-
-/************************************************************
- * 特殊
- * 切換器按鈕
- ***********************************************************/
-.switch {
-    position: relative;
-    margin: 0;
-    padding: 12px 0px;
-}
-
-.switch input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-    display: flex;
-    align-items: center;
-    padding: 0;
-
-}
-
-.switch .slider {
-    position: relative;
-    display: inline-block;
-    width: 65px;
-    height: 39px;
-    background-color: #ccc;
-    color: #ccc;
-    border-radius: 31px;
-    transition: background-color 0.2s ease;
-}
-
-.slider:hover {
-    background-color: #999;
-}
-
-.switch .slider:before {
-    position: absolute;
-    content: "";
-    height: 31px;
-    width: 31px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.2s ease;
-}
-
-.switch input[type="checkbox"]:checked+.slider:hover {
-    background-color: darkgreen;
-}
-
-.switch input[type="checkbox"]:checked+.slider {
-    background-color: green;
-}
-
-.switch input[type="checkbox"]:checked+.slider:before {
-    transform: translateX(25px);
-}
-
-.css_table{
-    display: table;
-}
-.css_row{
-    display: table-row;
-}
-.css_col{
-    display: table-cell;
-}
+    font-display: block;
+    src: url(./font/fa-solid-900.ttf);
+} */
+/* @import url(font-awesome.min.css); */
+/************************************************************/

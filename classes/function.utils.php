@@ -97,8 +97,11 @@ function httpRespondJson($message = ["status" => 200, "data" => ""], $exitDirect
 {
     header("Content-type: application/json");
     http_response_code($message['status']);
-    if ($exitDirectly) exit(json_encode($message));
-    return json_encode($message);
+    $result = json_encode($message);
+    // json例外狀況
+    if ($result === null || json_last_error() !== JSON_ERROR_NONE) $result = "";
+    if ($exitDirectly) exit($result);
+    return $result;
 }
 /************************************************
  * ### 傳送站內API資訊 ###
@@ -135,7 +138,7 @@ function sensitiveWordFilter($str, $banword = []): bool
  ************************************************/
 function convertCSharpTickToTimestamp($time, $timezoneOffset = 28800)
 {
-    return ($time - 621355968000000000) / 10000000 - $timezoneOffset;
+    return ($time / 10000000 - 62135596800)  - $timezoneOffset;
 }
 /************************************************
  * ### 時間轉換器 將時間戳轉換成Unix時間戳 ###
@@ -146,4 +149,26 @@ function convertTimestampToCSharpTick($time, $timezoneOffset = 28800)
 {
     return ($time + $timezoneOffset + 62135596800) * 10000000;
     // number_format($res, 0, '', '')
+}
+/************************************************
+ * ### 將陣列轉換成字串表示 ###
+ * @param array $array 目標陣列
+ ************************************************/
+function arrayToString($array)
+{
+    $stringResult = "(";
+    $length = count($array);
+    foreach ($array as $key => $value) {
+        $stringResult .= $value;
+        if ($key < $length - 1) $stringResult .= ", ";
+    }
+    $stringResult .= ")";
+    return $stringResult;
+}
+/************************************************
+ * ### 測試 ###
+ ************************************************/
+function test()
+{
+    header("Content-type: application/json");
 }

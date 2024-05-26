@@ -8,24 +8,48 @@
  ****************************************************************************************/
 class websiteManage
 {
-    private $conn;
+    protected $conn;
     private $website = "s_website";
     private $newebpay = "s_newebpay";
-    private $pages = "w_pages";
-    private $page_component = "w_page_component";
+    
     public function __construct($db)
     {
         $this->conn = $db;
     }
     /************************************************
-     * ### 取得網站資訊 ###
+     * ### 透過domainName取得網站資訊 ###
      * @param int|string $value 網站的編號 或 網域名稱
      ************************************************/
-    public function getAllWebsite(): array
+    public function getAllWebsiteInformation(): array
     {
-        $sql = "SELECT `id`,`domain`,`icon`,`status` FROM `{$this->website}`;";
+        $sql = "SELECT `website`.`id`,`website`.`prefix`,
+        `website`.`displayname`,`website`.`distribution`,`website`.`icon`,
+        `website`.`theme_version`,`website`.`status`,`website`.`created_at`,`website`.`updated_at`, 
+        `newebpay`.`store_id`,`newebpay`.`store_hash_key`,
+        `newebpay`.`store_hash_iv`,`newebpay`.`store_return_url`,`newebpay`.`store_client_back_url`
+        FROM `{$this->website}` AS `website`
+        JOIN `{$this->newebpay}` AS `newebpay` ON `newebpay`.`wid` = `website`.`id`;";
         $result = $this->conn->each($sql);
-        return empty($result)? []:$result;
+        if (empty($result)) return [];
+        return $result;
+    }
+    /************************************************
+     * ### 透過domainName取得網站資訊 ###
+     * @param int|string $value 網站的編號 或 網域名稱
+     ************************************************/
+    public function getWebsiteInformationByDomain($domainName): array
+    {
+        $sql = "SELECT `website`.`id`,`website`.`prefix`,
+        `website`.`displayname`,`website`.`distribution`,`website`.`icon`,
+        `website`.`theme_version`,`website`.`status`,`website`.`created_at`,`website`.`updated_at`, 
+        `newebpay`.`store_id`,`newebpay`.`store_hash_key`,
+        `newebpay`.`store_hash_iv`,`newebpay`.`store_return_url`,`newebpay`.`store_client_back_url`
+        FROM `{$this->website}` AS `website`
+        JOIN `{$this->newebpay}` AS `newebpay` ON `newebpay`.`wid` = `website`.`id`
+        WHERE `domain` = ? LIMIT 1;";
+        $result = $this->conn->prepare($sql, [$domainName]);
+        if (empty($result)) return [];
+        return $result[0];
     }
     /************************************************
      * ### 取得網站資訊 ###
@@ -33,11 +57,14 @@ class websiteManage
      ************************************************/
     public function getWebsiteInformation($value): array
     {
-        $field = 'id';
-        if (is_string($value)) $field = 'domain';
-        $sql = "SELECT * FROM `{$this->website}` AS `website`
+        $sql = "SELECT `website`.`domain`,`website`.`prefix`,
+        `website`.`displayname`,`website`.`distribution`,`website`.`icon`,
+        `website`.`theme_version`,`website`.`status`,`website`.`created_at`,`website`.`updated_at`, 
+        `newebpay`.`store_id`,`newebpay`.`store_hash_key`,
+        `newebpay`.`store_hash_iv`,`newebpay`.`store_return_url`,`newebpay`.`store_client_back_url`
+        FROM `{$this->website}` AS `website`
         JOIN `{$this->newebpay}` AS `newebpay` ON `newebpay`.`wid` = `website`.`id`
-        WHERE `{$field}` = ? LIMIT 1;";
+        WHERE `id` = ? LIMIT 1;";
 
         $result = $this->conn->prepare($sql, [$value]);
         if (empty($result)) return [];
@@ -52,7 +79,7 @@ class websiteManage
     {
         $result = true;
         $domainName = htmlspecialchars($domainName);
-        $res = $this->getWebsiteInformation($domainName);
+        $res = $this->getWebsiteInformationByDomain($domainName);
         // 如果沒有建立過的網域才能建立新網站
         if (empty($res)) {
             $wParams = [
@@ -70,15 +97,14 @@ class websiteManage
                 '0',
                 '0',
                 "https://{$domainName}/projects/steam",
-                "https://{$domainName}/projects/steam",
-                "https://{$domainName}/projects/steam/api/done.php"
+                "https://{$domainName}/projects/steam"
             ];
             // --------------------------------------------------------------------------------
             $sql = "INSERT INTO `{$this->website}` (`id`, `domain`, `name`, `displayname`, `distribution`, `icon`) 
             VALUES (?, ?, ?, ?, ?, ?);";
             $result &= empty($this->conn->prepare($sql, $wParams));
             // --------------------------------------------------------------------------------
-            $sql = "INSERT INTO `{$this->newebpay}` VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            $sql = "INSERT INTO `{$this->newebpay}` VALUES(?, ?, ?, ?, ?, ?, ?);";
             $result &= empty($this->conn->prepare($sql, $nParams));
             return $result;
         } else return false;
@@ -113,7 +139,7 @@ class websiteManage
     {
         $result = true;
         $wOriginalInformation = $this->getWebsiteInformation($wid);
-        if (!empty($wOriginalInformation)) return false;
+        if (empty($wOriginalInformation)) return false;
         // if (!preg_match('/^[a-zA-Z0-9_\-@$.\s]+$/', $wInformation)) return false;
         $website = isset($wInformation["website"]) ? $wInformation["website"] : [];
         $newebpay = isset($wInformation["newebpay"]) ? $wInformation["newebpay"] : [];
@@ -122,33 +148,31 @@ class websiteManage
         if (!empty($website)) {
             $params = [
                 empty($website['domain']) ? $wOriginalInformation['domain'] : $website['domain'],
-                empty($website['name']) ? $wOriginalInformation['name'] : $website['name'],
-                empty($website['displayname']) ? $wOriginalInformation['displayname'] : $website['displayname'],
-                empty($website['distribution']) ? $wOriginalInformation['distribution'] : $website['distribution'],
+                empty($website['prefix']) ? $wOriginalInformation['prefix'] : $website['prefix'],
+                empty($website['displayname']) ? $wOriginalInformation['displayname'] : htmlspecialchars($website['displayname']),
+                empty($website['distribution']) ? $wOriginalInformation['distribution'] : htmlspecialchars($website['distribution']),
                 empty($website['icon']) ? $wOriginalInformation['icon'] : $website['icon'],
-                empty($website['background']) ? $wOriginalInformation['background'] : $website['background'],
-                empty($website['stylesheet']) ? $wOriginalInformation['stylesheet'] : $website['stylesheet'],
-                empty($website['theme']) ? $wOriginalInformation['theme'] : $website['theme'],
+                // empty($website['theme']) ? $wOriginalInformation['theme'] : $website['theme'],
                 $wid
             ];
-            $sql = "UPDATE `{$this->website}` SET `domain` = ?, `name` =?, 
-                `displayname` = ?, `distribution` = ?, `icon` = ?, `background` = ?, `stylesheet` =?, `theme` =? 
+            $themeVersion = isset($website['theme']) ? ", `theme_version` = `theme_version` + 1" : "";
+            $sql = "UPDATE `{$this->website}` SET `domain` = ?, `prefix` =?, 
+                `displayname` = ?, `distribution` = ?, `icon` = ? {$themeVersion}
                 WHERE `id` = ? ;";
             $result &= empty($this->conn->prepare($sql, $params));
         }
         if (!empty($newebpay)) {
             $params = [
-                empty($newebpay['store_prefix']) ? $wOriginalInformation['store_prefix'] : $newebpay['store_prefix'],
+                // empty($newebpay['store_prefix']) ? $wOriginalInformation['store_prefix'] : $newebpay['store_prefix'],
                 empty($newebpay['store_id']) ? $wOriginalInformation['store_id'] : $newebpay['store_id'],
                 empty($newebpay['store_hash_key']) ? $wOriginalInformation['store_hash_key'] : $newebpay['store_hash_key'],
                 empty($newebpay['store_hash_iv']) ? $wOriginalInformation['store_hash_iv'] : $newebpay['store_hash_iv'],
                 empty($newebpay['store_return_url']) ? $wOriginalInformation['store_return_url'] : $newebpay['store_return_url'],
                 empty($newebpay['store_client_back_url']) ? $wOriginalInformation['store_client_back_url'] : $newebpay['store_client_back_url'],
-                empty($newebpay['store_notify_url']) ? $wOriginalInformation['store_notify_url'] : $newebpay['store_notify_url'],
                 $wid
             ];
-            $sql = "UPDATE `{$this->newebpay}` SET `store_prefix` = ?, `store_id` =?, `store_hash_key` = ?, `store_hash_iv` = ?, 
-                `store_return_url` = ?, `store_client_back_url` = ?, `store_notify_url` =? WHERE `wid` = ? ;";
+            $sql = "UPDATE `{$this->newebpay}` SET `store_id` =?, `store_hash_key` = ?, `store_hash_iv` = ?, 
+                `store_return_url` = ?, `store_client_back_url` = ? WHERE `wid` = ? ;";
             $result &= empty($this->conn->prepare($sql, $params));
         }
         return $result;

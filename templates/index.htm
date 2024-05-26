@@ -1,7 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL was not found on this server.</p>
-</body></html>
+{* 負責引入所有頁面之必要htm *}
+
+{include file="header.htm"}
+<div id="notification">
+    <div class="content">
+        <span id="notification_icon" class="icon"></span>
+        <span id="notification_message"></span>
+    </div>
+    <div id="notification_bar"></div>
+</div>
+{include file="{$dir}/main.htm"}
+{include file="footer.htm"}

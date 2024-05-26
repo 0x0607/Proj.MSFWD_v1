@@ -1,0 +1,69 @@
+{if isset($webnav)}
+<!-- AdminNavBar -->
+<nav class="navbar">
+    <div class="content">
+        <!-- <a class="icon" href="#route" onclick="route('/?route=home')">
+            <span>{$siteName}</span>
+        </a> -->
+        <div class="menu">
+            <div class="mask" id="1364965662354567168">
+                <div class="system_buttons">
+                    <!-- <button class="hamburgermenu" onclick="toggleNavMenu('1364965662354567168')">
+                        <span class="buttonicon fa-solid fa-bars"></span>
+                        <span class="word">More</span>
+                    </button> -->
+
+                    {foreach $webnav as $navbar}
+                    {if is_array($navbar.link)}
+                    <div class="dropdown" ontouchstart>
+                        <button class="word">
+                            <span class="buttonicon fa-solid fa-star"></span>
+                            <span class="word">{$navbar.displayname}</span>
+                        </button>
+                        <div class="list">
+                            {foreach $navbar.link as $dropdown}
+                            {if $dropdown.status}
+                            <button onclick="route('{$dropdown.link}')">
+                                <span
+                                    class="buttonicon fa-solid {if isset($dropdown.icon)}fa-{$dropdown.icon}{else}star{/if}"></span>
+                                <span class="word">{$dropdown.displayname}</span>
+                            </button>
+                            {else}
+                            <!-- 系統已屏蔽按鈕 -->
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    {else}
+                    {if $navbar.status}
+                    <button onclick="route('{$navbar.link}')">
+                        <span
+                            class="buttonicon fa-solid fa-{if isset($navbar.icon)}{$navbar.icon}{else}star{/if}"></span>
+                        <span class="word">{$navbar.displayname}</span>
+                    </button>
+                    {else}
+                    <!-- 系統已屏蔽按鈕 -->
+                    {/if}
+                    {/if}
+                    {/foreach}
+                    <hr />
+                    <!-- <button id="backhome" title="backhome" onclick="route('/')">
+                        <span class="buttonicon fa-solid fa-house-flag"></span>
+                        <span class="word">檢視網站</span>
+                    </button>
+                    <button id="logout" title="logout" onclick="route('/account/?route=logout')">
+                        <span class="buttonicon fa-solid fa-door-open"></span>
+                        <span class="word">登出</span>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="placeholder">
+    <!-- 佔位符 -->
+</div>
+<!-- AdminNavBar EOF -->
+{/if}
+<!-- <button id="hiddenButton" style="left: 20%;" onclick="changeMenuStatus(this,'menu','navbar')"
+    class="material-icons">&#xe8b8</button> -->

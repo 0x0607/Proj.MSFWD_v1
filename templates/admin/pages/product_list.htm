@@ -1,0 +1,154 @@
+<div class="flex_table">
+    <div class="title">
+        <span class="fa-solid fa-{if isset($page_information.icon)}{$page_information.icon}{else}star{/if}"></span>
+        <span>{if isset($page_information.displayname)}{$page_information.displayname}{else}未命名功能{/if}</span>
+    </div>
+    {if isset($products)}
+    <div class="flex_th" style="text-align: center;">
+        {if $orderby eq "name"}
+        <a class="flex_td" style="flex: 2;"
+            href='?route={$route}&orderby=name&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>名稱</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td" style="flex: 2;" href="?route={$route}&orderby=name&page={$page}&limit={$limit}"
+            target="_self">
+            <span>名稱</span>
+            &nbsp;
+        </a>
+        {/if}
+        <!-------------------------------------------->
+        {if $orderby eq "price"}
+        <a class="flex_td tabletsHidden"
+            href='?route={$route}&orderby=price&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>售價</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td tabletsHidden" href="?route={$route}&orderby=price&page={$page}&limit={$limit}"
+            target="_self">
+            <span>售價</span>
+            &nbsp;
+        </a>
+        {/if}
+        <!-------------------------------------------->
+        {if $orderby eq "quantity"}
+        <a class="flex_td tabletsHidden"
+            href='?route={$route}&orderby=quantity&order={if $page_order eq "asc"}desc{else}asc{/if}&page={$page}&limit={$limit}'
+            target="_self">
+            <span>數量</span>
+            <span class='fa-solid fa-arrow-up-{if $page_order eq "desc"}wide-short{else}short-wide{/if}'></span>
+        </a>
+        {else}
+        <a class="flex_td tabletsHidden" href="?route={$route}&orderby=quantity&page={$page}&limit={$limit}"
+            target="_self">
+            <span>數量</span>
+            &nbsp;
+        </a>
+        {/if}
+        <!-------------------------------------------->
+        <a class="flex_td">
+            <span>狀態</span>
+        </a>
+        <a class="flex_td">
+            <span>編輯</span>
+        </a>
+    </div>
+    {foreach $products as $product}
+    <!-- productId: {$product.id} -->
+    <!-- <details class="product" style="text-align: center;"> -->
+    <!-- <summary class="flex_tr"> -->
+    <div class="flex_tr allergic" style="text-align: center;">
+        <div class="flex_td flex_tr" style="flex: 2;">
+            <div class="flex_td mobileHidden">
+                <img src="{if isset($product.images[0])}{$product.images[0]}{/if}"
+                    onerror="this.src='/assets/images/error404.png'" alt="{$product.name}'s images"
+                    style="background-color: #7A7A7A11;" />
+                <!-- <span class="fa-solid fa-arrow-up-from-bracket"></span> -->
+            </div>
+            <div class="flex_td">
+                {$product.name}
+            </div>
+        </div>
+        <div class="flex_td tabletsHidden">{$product.price}</div>
+        <div class="flex_td tabletsHidden">{if $product.quantity eq -1}<span
+                class="warn">∞</span>{else}{$product.quantity}{/if}
+        </div>
+        <form class="flex_td" method="POST" onsubmit="return false;">
+            <label class="switch" style="margin: 0 auto;">
+                <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                <input name="hash" type="hidden" value="{$product.hashdata}" />
+                <input name="action" type="hidden" value="PRODUCT_CHANGE_STATUS" />
+                <input type="checkbox" onchange="return done(this.form, false , 'ERROR_MESSAGE', false);" {if
+                    $product.status}checked{/if}>
+                <span class="slider"></span>
+            </label>
+        </form>
+        <div class="flex_td">
+            <div class="flex_tr">
+                <button onclick="route('manage.product&pid={$product.id}')">
+                    <span class="fa-solid fa-pen"></span>
+                    <span class="tabletsHidden">編輯</span>
+                </button>
+            </div>
+            {if isset($deleteProduct)}
+            <div class="flex_tr">
+                <form class="flex_td" method="POST" onsubmit="return done(this, 'refresh' , 'ERROR_MESSAGE', false);">
+                    <!-- {*$SERVER_IV*} iv 為隨訊息產生之初使化變量 -->
+                    <input name="iv" type="hidden" value="{$SERVER_IV}" />
+                    <!-- {*$SERVER_SEND_HASH_DATA*} hash 為加密後的資訊 需要key解鎖 -->
+                    <input name="hash" type="hidden" value="{$product.hashdata}" />
+                    <input name="action" type="hidden" value="PRODUCT_DELETE" />
+                    <button class="warn">
+                        <span class="fa-solid fa-trash-can"></span>
+                        <span class="tabletsHidden">刪除</span>
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+    </div>
+    <!-- </summary> -->
+    <!-- <div class="details">
+            建立時間：{$product.created_at}<br />
+            更新時間：{$product.updated_at}
+        </div> -->
+    <!-- </details> -->
+    {/foreach}
+    <!--頁碼工具--------------------------------------------------------------------------------------------->
+    {if isset($lastPage)}
+    <hr />
+    <div style="margin: 0 auto;">
+        {for $p=1 to $lastPage}
+        {if $p eq $page}
+        <button disabled>
+            {$p}
+        </button>
+        {else}
+        {if ($p lt $page+3 && $p gt $page-3) || ($p eq $lastPage) || ($p eq 1)}
+        {if ($p eq $lastPage) && ($p gt $page+3)}
+        <span>......</span>
+        {/if}
+        <button onclick="route('?route={$route}&orderby={$orderby}&order={$page_order}&page={$p}&limit={$limit}')">
+            {$p}
+        </button>
+        {if $p eq 1  && ($p lt $page-3)}
+        <span>......</span>
+        {/if}
+        {/if}
+        {/if}
+        {/for}
+    </div>
+    {/if}
+    <!--頁碼工具EOF------------------------------------------------------------------------------------------>
+    {else}
+    <div class="flex_th">
+        <h1 style="text-align: center;">沒有任何商品 sad..</h1>
+    </div>
+    {/if}
+</div>

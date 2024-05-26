@@ -1,0 +1,80 @@
+/* .wrapper {
+    width: 800px;
+    margin: 0 auto;
+} */
+
+#pageComponentList .interface,
+#pagePreView .interface {
+    margin: 0 auto;
+    width: 100%;
+    padding: 10px 30px;
+    background-color: var(--alpha-80p);
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.drag_wrapper {
+    display: flex;
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drag_wrapper>.drag_content,
+.drag_wrapper>.drag_content_add {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: var(--alpha-80p);
+    gap: 20px;
+    padding: 0 10px;
+
+}
+
+.drag_wrapper>.drag_content:hover {
+    background: var(--primary-bg-alpha30p);
+    cursor: move;
+    cursor: grab;
+}
+
+.drag_wrapper>.drag_content:active {
+    cursor: move;
+    cursor: grabbing;
+}
+
+.drag_wrapper>.drag_content.insertBefore {
+    border-top: 2px solid var(--primary-bg);
+    /* border-top: 100px solid var(--primary-bg);
+    height: 200px; */
+}
+
+.drag_wrapper>.drag_content.insertAfter {
+    border-bottom: 2px solid var(--primary-bg);
+    /* border-top: 100px solid var(--primary-bg);
+    height: 200px; */
+}
+
+.drag_wrapper>.drag_content button.delete {
+    background-color: transparent;
+    color: var(--warn);
+}
+
+.drag_wrapper>.drag_content button.delete:hover {
+    background-color: transparent;
+    color: var(--warn-hover);
+}
+
+.drag_wrapper>.drag_content button.edit {
+    background-color: transparent;
+    color: var(--accent-ft);
+}
+
+.drag_wrapper>.drag_content button.edit:hover {
+    background-color: transparent;
+    color: var(--primary-ft);
+}

@@ -50,7 +50,7 @@ $ tree -L 2
 ```
 - - -
 _當前版本快照_  
-![](assets/Template2.png)
+![](assets/Template1.png)
 - - -
 > ### 使用資源  
 > * _lib/[Smarty 4.3.0](https://www.smarty.net)_  

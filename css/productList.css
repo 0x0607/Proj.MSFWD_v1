@@ -35,7 +35,7 @@
     height: 200px;
     overflow: hidden;
     transition: .3s;
-    background: rgba(255,255,255,.05);
+    background: var(--alpha-20p);
 }
 
 .card-image img {
@@ -51,7 +51,7 @@
 
 .card-details {
     text-align: center;
-    background: rgba(0,0,0,.05);
+    background: var(--alpha-50p);
     /* background-color: rgba(0,0,0, .3); */
     font-size: 14px;
     width: 100%;

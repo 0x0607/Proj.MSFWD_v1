@@ -10,43 +10,76 @@
 class memberManage
 {
     private $conn;
+    private $wid = null;
+    private $limit = 1000;
     private $member = "m_members";
     private $members_profile = "m_members_profile";
+    private $members_attendance = "m_attendance";
     public function __construct($db)
     {
         $this->conn = $db;
+    }
+    /************************************************
+     * ### 設置 website_id ###
+     * @param int $wid website_id
+     ************************************************/
+    public function setWebsiteId($wid)
+    {
+        return $this->wid = $wid;
+    }
+    /************************************************
+     * ### 設置單次獲取筆數上限 ###
+     * @param int $limit 上限
+     ************************************************/
+    public function setLimit($limit = 1000)
+    {
+        if ($limit < 5000) {
+            $this->limit = $limit;
+            return true;
+        }
+        return false;
     }
     /************************************************
      * ### 確認使用者輸入之帳戶與密碼是否正確 ###
      * @param string $account 會員帳號 
      * @param string $password 會員密碼
      ************************************************/
-    public function memberLogin($account, $password, $isHashPassword = true): bool
+    public function memberLogin($account, $password, $isHashPassword = true): int
     {
         $account = htmlspecialchars(strtolower($account));
         if (!$isHashPassword) $password = hash('sha256', $password);
-        $sql = "SELECT `id`, `account`, `status` FROM `{$this->member}` WHERE `account` = ? AND `password` = ? LIMIT 1;";
+        $sql = "SELECT `id` FROM `{$this->member}` WHERE `account` = ? AND `password` = ? LIMIT 1;";
         $result = $this->conn->prepare($sql, [$account, $password]);
-        // if (empty($result)) return 0;
-        // return $result[0]['id'];
-        return !empty($result);
+        return empty($result) ? 0 : $result[0]['id'];
     }
     /************************************************
      * ### 取得會員資訊 ###
-     * @param int|string $value 會員的編號 或 會員的帳號
+     * @param int $mid 會員的編號
      ************************************************/
-    public function getMemberInformation($value): array
+    public function getMemberInformation($mid): array
     {
-        $field = 'id';
         // (is_int($value) && $value < 1e17)
-        if (is_string($value)) {
-            $field = 'account';
-            $value = htmlspecialchars(strtolower($value));
-        }
+        // if (is_string($mid)) return $this->getMemberInformationByAccount($mid);
+        $mid = intval($mid);
         $sql = "SELECT * FROM `{$this->member}` AS `member`
         JOIN `{$this->members_profile}` AS `mProfile` ON `mProfile`.`mid` = `member`.`id`
-        WHERE `{$field}` = ? LIMIT 1;";
-        $result = $this->conn->prepare($sql, [$value]);
+        WHERE `member`.`id` = ? LIMIT 1;";
+        $result = $this->conn->prepare($sql, [$mid]);
+        if (empty($result)) return [];
+        return $result[0];
+    }
+    /************************************************
+     * ### 取得會員資訊透過帳號 ###
+     * @param string $account 會員的帳號
+     ************************************************/
+    public function getMemberInformationByAccount($account): array
+    {
+        $account = htmlspecialchars(strtolower($account));
+
+        $sql = "SELECT * FROM `{$this->member}` AS `member`
+        JOIN `{$this->members_profile}` AS `mProfile` ON `mProfile`.`mid` = `member`.`id`
+        WHERE `member`.`account` = ? LIMIT 1;";
+        $result = $this->conn->prepare($sql, [$account]);
         if (empty($result)) return [];
         return $result[0];
     }
@@ -70,7 +103,7 @@ class memberManage
      * ]]  
      * ```
      ************************************************/
-    public function addMember($mid, $mAccount = [], $isHashPassword=true): bool
+    public function addMember($mid, $mAccount = [], $isHashPassword = true): bool
     {
         $checkExist = $this->getMemberInformation($mid);
         if (!empty($checkExist)) return false;
@@ -129,7 +162,7 @@ class memberManage
                 // 如果沒填的欄位將會以原始資訊填入
                 $params = [
                     empty($mAccount['account']) ? $mOriginalInformation['account'] : htmlspecialchars(strtolower(trim($mAccount['account']))),
-                    empty($mAccount['password']) ? $mOriginalInformation['password'] : hash('sha256', $mAccount['password']),
+                    empty($mAccount['password']) ? $mOriginalInformation['password'] : $mAccount['password'],
                     empty($mAccount['nickname']) ?  $mOriginalInformation['nickname'] : htmlspecialchars($mAccount['nickname']),
                     empty($mAccount['last_ip_address']) ? $mOriginalInformation['last_ip_address'] : $mAccount['last_ip_address'],
                     empty($mAccount['status']) ? $mOriginalInformation['status'] : $mAccount['status'],
@@ -153,5 +186,43 @@ class memberManage
             }
         }
         return $result;
+    }
+    /************************************************
+     * ### 確認簽到狀況 ###
+     * @param int $mid 會員編號
+     ************************************************/
+    public function getAttendance($mid): array
+    {
+        $sql = "SELECT `day`,`nonstop_day`,`last_sign_at` FROM {$this->members_attendance} WHERE `wid` = ? AND `mid` = ? ;";
+        $result = $this->conn->prepare($sql, [$this->wid, $mid]);
+        return empty($result) ? [] : $result[0];
+    }
+    /************************************************
+     * ### 簽到功能 ###
+     * @param int $mid 會員編號
+     ************************************************/
+    public function updateAttendance($mid): array
+    {
+        $result = false;
+        $attendanceResult = $this->getAttendance($mid);
+        if ($attendanceResult) {
+            if (date('Y-m-d', strtotime($attendanceResult['last_sign_at'])) != date('Y-m-d')) {
+                $attendanceResult['day'] += 1;
+                $attendanceResult['nonstop_day'] = (date('Y-m-d', strtotime($attendanceResult['last_sign_at'])) == date('Y-m-d', strtotime('-1 day'))) ? ($attendanceResult['nonstop_day'] + 1) : 1;
+                $attendanceResult['last_sign_at'] = date('Y-m-d H:i:s');
+                $sql = "UPDATE {$this->members_attendance} SET `day` = ?, `nonstop_day` = ?, `last_sign_at` = ? WHERE `wid` = ? AND `mid` = ?";
+                $result = empty($this->conn->prepare($sql, [$attendanceResult['day'], $attendanceResult['nonstop_day'], $attendanceResult['last_sign_at'], $this->wid, $mid]));
+            }
+        } else {
+            $attendanceResult = [
+                "day" => 1,
+                "nonstop_day" => 1,
+                "last_sign_at" => date('Y-m-d H:i:s')
+            ];
+            $sql = "INSERT INTO {$this->members_attendance} (`wid`, `mid`, `day`, `nonstop_day`, `last_sign_at`) VALUES (?, ?, ?, ?, ?)";
+            $result = empty($this->conn->prepare($sql, [$this->wid, $mid, $attendanceResult['day'], $attendanceResult['nonstop_day'], $attendanceResult['last_sign_at']]));
+        }
+        if ($result) return $attendanceResult;
+        return [];
     }
 }

@@ -8,7 +8,7 @@ $LOG_REASON["api.checkout"] = "";
  ****************************************************************************************/
 require_once('../api/newebpay/neweb.installation.php');
 /****************************************************************************************/
-$minimumPrice = 35;         // 最小金額
+$minimumPrice = 29;         // 最小金額
 $outputMethod = "FORM";     // 設置輸出模式 JSON 不輸出資料至藍新(測試用途) / String 輸出至藍新
 if ($outputMethod == "FORM") header('Content-Type: text/html; charset=utf-8');
 /****************************************************************************************/
@@ -16,18 +16,18 @@ if ($outputMethod == "FORM") header('Content-Type: text/html; charset=utf-8');
 $merchantTradeNo = STORE_PREFIX . $sf->getId();
 /****************************************************************************************/
 if (isset($_POST['pid'], $_SESSION["member"]['mid'])) {
-    if ($_POST['pid'] && preg_match('/^([0-9]{19,20})$/', $_POST['pid'])) {
-        $pInformation = $productManage->getProductInformation(WEBSITE_ID, $_POST['pid']);
+    if ($_POST['pid'] && preg_match('/^([0-9]{18,20})$/', $_POST['pid'])) {
+        $pInformation = $productManage->getProductInformation($_POST['pid']);
         if ($pInformation['price'] <= $minimumPrice) httpRespondJson(["status" => 400, "data" => "Invalid price variable"]);
         /****************************************************************************************/
         // 藍新支付相關資訊
-        $newebPayObj->settingOrderInformation($merchantTradeNo, WEBSITE_NAME . " - " . $pInformation['name'], $pInformation['price']);
+        $newebPayObj->settingOrderInformation($merchantTradeNo, WEBSITE['displayname'] . " - " . $pInformation['name'], $pInformation['price']);
         /****************************************************************************************/
         // 訂單相關
         $ordersInformation = [
             $merchantTradeNo,                                       // 訂單ID
             $_SESSION["member"]['mid'],                             // 會員ID
-            WEBSITE_ID,                                             // 網站ID
+            WEBSITE['id'],                                          // 網站ID
             $pInformation['price'] * 1,                             // 商品總計購買金額
             sha1($merchantTradeNo . $_SESSION["member"]['mid'])     // 雜湊
         ];

@@ -1,0 +1,29 @@
+{
+    "1.0": {
+        "title":{
+            "multiplier": 1,
+            "value":{
+                "title": {
+                    "type": "text",
+                    "displayname": "標題文字",
+                    "default": "新建的公告欄"
+                }
+            }
+        },
+        "message": {
+            "multiplier": 4,
+            "value": {
+                "title": {
+                    "type": "text",
+                    "displayname": "選單文字",
+                    "default": "選項"
+                },
+                "content": {
+                    "type": "textarea",
+                    "displayname": "選單內文",
+                    "default": "一些文字"
+                }
+            }
+        }
+    }
+}
