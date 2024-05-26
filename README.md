@@ -1,9 +1,31 @@
 ## ☆ TwilightMart
+```md
+# LastUpdate 20240515
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+PHP                            287           1661          14022          23169
+HTML                            39             78            335           1923
+CSS                             20            351            452           1864
+JavaScript                      11             73            279            908
+SQL                              3             56             47            718
+Smarty                           1             24              0            151
+Markdown                         3              3              0            110
+JSON                             8              0              0             92
+INI                              1              4              0             38
+Bourne Shell                     2              3              8             26
+SVG                              4              0              1             12
+Text                             2              0              0              4
+-------------------------------------------------------------------------------
+SUM:                           381           2253          15144          29015
+-------------------------------------------------------------------------------
+```
+
 系統環境  
 - [RockyOS](https://rockylinux.org/zh_TW/news/rocky-linux-8-6-ga-release/)/8.6  
 - [Apache](https://httpd.apache.org/)/2.4.53  
 - [PHP](https://www.php.net/)/8.0.20  
-- [composer](https://getcomposer.org/)/2.5.4  
+- ~~[composer](https://getcomposer.org/)/2.5.4~~  
 - ~~[codeigniter](https://codeigniter.tw/)/4.1.5~~  
 
 **安裝Apache**  
@@ -50,11 +72,11 @@ $ tree -L 2
 ```
 - - -
 _當前版本快照_  
-![](assets/Template1.png)
+![](assets/Template2.png)
 - - -
 > ### 使用資源  
 > * _lib/[Smarty 4.3.0](https://www.smarty.net)_  
 > * _javaScript/[Bootstrap v4.0.0](https://getbootstrap.com)_  
 > * _javaScript/[jquery-3.2.1](https://jquery.com)_  
-> * _javaScript/[Popper 3](https://github.com/vusion/popper.js)_  
+> ~~* _javaScript/[Popper 3](https://github.com/vusion/popper.js)_~~  
 > * _css/[Bootstrap v4.0.0](https://getbootstrap.com)_  
